@@ -1,5 +1,7 @@
 name: German Pocket test APK
 on:
+  push:
+    branches: [codex/native-pocket-german]
   workflow_dispatch:
     inputs:
       release_tag:
