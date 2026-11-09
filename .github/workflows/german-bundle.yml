@@ -1,0 +1,72 @@
+name: German Pocket downloadable bundle
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/native-pocket-german]
+    paths:
+      - 'scripts/pocket-bundle/**'
+      - '.github/workflows/german-bundle.yml'
+permissions:
+  contents: write
+concurrency:
+  group: german-pocket-bundle
+  cancel-in-progress: false
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Export-time CPU tools
+        run: |
+          python -m pip install torch==2.5.1+cpu --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r scripts/pocket-bundle/requirements-export.txt
+      - name: Pinned existing five-graph exporter
+        run: |
+          git clone https://github.com/lomotron/pocket-tts-onnx-export "$RUNNER_TEMP/pocket-export"
+          git -C "$RUNNER_TEMP/pocket-export" checkout 8f52199533098963fe1cbd90bed35bb20d871b5e
+      - name: Export and package all 27 voices
+        run: |
+          python scripts/pocket-bundle/export_german.py --exporter-dir "$RUNNER_TEMP/pocket-export" --cache "$RUNNER_TEMP/inputs" --output "$RUNNER_TEMP/graphs"
+          python scripts/pocket-bundle/prepare_german_bundle.py --cache "$RUNNER_TEMP/inputs" --export-dir "$RUNNER_TEMP/graphs" --output "$RUNNER_TEMP/package"
+      - name: Technical audio test of every packaged voice
+        run: |
+          python - <<'PY'
+          import importlib.util, os, pathlib, urllib.request
+          p = pathlib.Path('scripts/pocket-bundle/verify_bundle.py')
+          spec = importlib.util.spec_from_file_location('gate', p)
+          gate = importlib.util.module_from_spec(spec); spec.loader.exec_module(gate)
+          pathlib.Path(os.environ['RUNNER_TEMP'], 'reference.py').write_bytes(urllib.request.urlopen(gate.REFERENCE_URL, timeout=60).read())
+          PY
+          python scripts/pocket-bundle/verify_bundle.py --bundle "$RUNNER_TEMP/package/pocket-tts-de" --reference "$RUNNER_TEMP/reference.py" --output "$RUNNER_TEMP/audio"
+          python - <<'PY'
+          import json, pathlib, os
+          root = pathlib.Path(os.environ['RUNNER_TEMP'], 'package')
+          r = json.loads((root / 'bundle-result.json').read_text())
+          (root / 'SHA256SUMS').write_text(r['sha256'] + '  pocket-tts-de.tar.gz\n')
+          print(json.dumps(r, indent=2))
+          PY
+      - name: Publish opt-in model data in this fork only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_REPOSITORY" = 'madebycli/marmalade-tts-android-german'
+          if gh release view pocket-de-bundle-v1 --json assets --jq '.assets[].name' | grep -qx pocket-tts-de.tar.gz; then
+            mkdir -p "$RUNNER_TEMP/existing"
+            gh release download pocket-de-bundle-v1 --pattern bundle-result.json --dir "$RUNNER_TEMP/existing"
+            python - <<'PY'
+          import json, pathlib, os
+          root = pathlib.Path(os.environ['RUNNER_TEMP'])
+          old = json.loads((root / 'existing/bundle-result.json').read_text())
+          new = json.loads((root / 'package/bundle-result.json').read_text())
+          assert old['sha256'] == new['sha256'], 'Published bundle is immutable; use a new release tag'
+          PY
+          else
+            gh release upload pocket-de-bundle-v1 "$RUNNER_TEMP/package/pocket-tts-de.tar.gz" "$RUNNER_TEMP/package/SHA256SUMS" "$RUNNER_TEMP/package/bundle-result.json"
+          fi
+          gh release upload pocket-de-bundle-v1 "$RUNNER_TEMP/audio/German-Pocket-27-voice-samples.zip" "$RUNNER_TEMP/audio/host-voices.json" --clobber

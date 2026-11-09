@@ -115,7 +115,7 @@ class EngineProfilesTest {
             assertTrue("$engine must include heteronym", "heteronym" in profile)
             assertTrue("$engine must include respell", "respell" in profile)
         }
-        val noEspeak = listOf("pocket-tts-en-v2026_04", "pocket-tts-en-v2026_04-dev")
+        val noEspeak = listOf("pocket-tts-en-v2026_04", "pocket-tts-en-v2026_04-dev", "pocket-tts-de")
         for (engine in noEspeak) {
             val profile = EngineProfiles.defaultsFor(engine)
             assertFalse("$engine must NOT include heteronym", "heteronym" in profile)

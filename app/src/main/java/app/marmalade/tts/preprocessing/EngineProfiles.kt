@@ -128,11 +128,19 @@ object EngineProfiles {
      * Kitten defaults; Kokoro Direct uses the Kokoro defaults. Pocket TTS uses
      * [POCKET_DEFAULTS] (no espeak, so no heteronym/respell).
      */
+    // German Pocket handles language-dependent expansions itself. English rules
+    // would otherwise turn 16:30, %, & and abbreviations into English first.
+    private val POCKET_GERMAN_DEFAULTS: Set<String> = setOf(
+        "linebreaks", "markdown", "html", "separators", "parens", "emoji",
+        "repeated_punctuation", "terminal_punctuation",
+    )
+
     val DEFAULT_PROFILES: Map<String, Set<String>> = mapOf(
         "kitten-direct-v0_8" to KITTEN_DEFAULTS,
         "kokoro-direct-v1_0" to KOKORO_DEFAULTS,
         "kokoro-de-v1_0" to KOKORO_GERMAN_DEFAULTS,
         "pocket-tts-en-v2026_04" to POCKET_DEFAULTS,
+        "pocket-tts-de" to POCKET_GERMAN_DEFAULTS,
         // Developer-only clean-room Pocket engine — same profile as production Pocket.
         "pocket-tts-en-v2026_04-dev" to POCKET_DEFAULTS,
         // VITS Marmalade: the checkpoints normalize nothing upstream — espeak

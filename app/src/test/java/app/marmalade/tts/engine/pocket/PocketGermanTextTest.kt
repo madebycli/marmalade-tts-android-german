@@ -38,4 +38,12 @@ class PocketGermanTextTest {
             assertEquals(text, once, PocketGermanText.normalize(once))
         }
     }
+    @Test fun `complete app preprocessing preserves German instead of English expansions`() {
+        val processor = app.marmalade.tts.preprocessing.Preprocessor(
+            app.marmalade.tts.preprocessing.PreprocessingRules.ALL.associateBy { it.name })
+        val rules = app.marmalade.tts.preprocessing.EngineProfiles.defaultsFor("pocket-tts-de")
+        val cleaned = processor.apply("Am 14. März um 16:30 Uhr: 25% & 3 €.", rules)
+        assertEquals("Am vierzehnten März um sechzehn Uhr dreißig: fünfundzwanzig Prozent und drei Euro.",
+            PocketGermanText.normalize(cleaned))
+    }
 }
