@@ -169,8 +169,8 @@ data class EngineDescriptor(
     val licenseNotice: String,
     @StringRes val licenseSummaryRes: Int,
     @StringRes val taglineRes: Int,
-    val speedTier: SpeedTier,
-    val quality: QualityGrade,
+    val speedTier: SpeedTier?,
+    val quality: QualityGrade?,
     val languageCodes: List<String>,
     /**
      * Languages this engine can *phonemize* but has no trained voice for —
@@ -210,10 +210,12 @@ data class EngineDescriptor(
      *    and per-pack update detection lives on the pack, not here.
      */
     val defaultPackId: String? = null,
-    val hasMeasuredRatings: Boolean = true,
 ) {
     /** True when this engine installs per-language voice packs — see [defaultPackId]. */
     val isPackBased: Boolean get() = defaultPackId != null
+
+    /** Unknown ratings are absent rather than guessed from another checkpoint. */
+    val hasMeasuredRatings: Boolean get() = speedTier != null && quality != null
 
     init {
         require(name.isNotBlank()) { "engine name must not be blank" }
@@ -520,10 +522,9 @@ object EngineCatalog {
         licenseNotice = "LICENSES/pocket-tts-de.md",
         licenseSummaryRes = R.string.engine_pocket_de_license,
         taglineRes = R.string.engine_pocket_de_tagline,
-        // These inherited family values are deliberately hidden until actual listening/device tests.
-        speedTier = POCKET_TTS_EN.speedTier,
-        quality = POCKET_TTS_EN.quality,
-        hasMeasuredRatings = false,
+        // Neither a device measurement nor a listening grade exists for this checkpoint yet.
+        speedTier = null,
+        quality = null,
         languageCodes = listOf("de"),
     )
 

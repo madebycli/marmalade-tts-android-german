@@ -1,0 +1,175 @@
+<exporter>/scripts/export_mimi_and_conditioner.py:288: TracerWarning: Converting a tensor to a Python float might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  ideal_length = (math.ceil(n_frames) - 1) * stride + (kernel_size - padding_total)
+<exporter>/scripts/export_mimi_and_conditioner.py:237: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if TP and self.pad_mode == "replicate":
+<exporter>/scripts/export_mimi_and_conditioner.py:245: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if TP:
+<exporter>/scripts/export_mimi_and_conditioner.py:248: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if TP:
+<exporter>/pocket_tts/modules/seanet.py:40: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert x.shape == v.shape, (x.shape, v.shape, x.shape)
+<exporter>/pocket_tts/modules/mimi_transformer.py:107: TracerWarning: Iterating over a tensor might cause the trace to be incorrect. Passing a tensor of different shape won't change the number of iterations executed (and might lead to errors or silently give incorrect results).
+  q, k, v = rearrange(projected, "b t (p h d) -> p b h t d", p=3, h=self.num_heads)
+<exporter>/pocket_tts/modules/rope.py:23: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert (B, T, D) == (Bk, Tk, Dk)
+<exporter>/pocket_tts/modules/rope.py:24: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert D > 0
+<exporter>/pocket_tts/modules/rope.py:25: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert D % 2 == 0
+<exporter>/pocket_tts/modules/mimi_transformer.py:24: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert tuple(values.shape[:-1]) == (B, H, T)
+W1109 19:39:10.836000 4594 pocket-tools/lib/python3.12/site-packages/torch/fx/experimental/symbolic_shapes.py:5124] failed during evaluate_expr(u0 < 0, hint=None, size_oblivious=False, forcing_spec=False
+E1109 19:39:10.837000 4594 pocket-tools/lib/python3.12/site-packages/torch/fx/experimental/recording.py:298] failed while running evaluate_expr(*(u0 < 0, None), **{'fx_node': False})
+W1109 19:39:10.841000 4594 pocket-tools/lib/python3.12/site-packages/torch/fx/experimental/symbolic_shapes.py:5554] Unable to find user code corresponding to {u0}
+W1109 19:39:19.274000 4594 pocket-tools/lib/python3.12/site-packages/torch/onnx/_internal/exporter/_registration.py:73] torchvision is not installed. Skipping torchvision::nms
+<exporter>/scripts/export_mimi_and_conditioner.py:260: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if PT > 0:
+<exporter>/pocket_tts/modules/mimi_transformer.py:107: TracerWarning: Iterating over a tensor might cause the trace to be incorrect. Passing a tensor of different shape won't change the number of iterations executed (and might lead to errors or silently give incorrect results).
+  q, k, v = rearrange(projected, "b t (p h d) -> p b h t d", p=3, h=self.num_heads)
+<exporter>/pocket_tts/modules/rope.py:23: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert (B, T, D) == (Bk, Tk, Dk)
+<exporter>/pocket_tts/modules/rope.py:24: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert D > 0
+<exporter>/pocket_tts/modules/rope.py:25: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert D % 2 == 0
+<exporter>/scripts/export_mimi_and_conditioner.py:237: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if TP and self.pad_mode == "replicate":
+<exporter>/scripts/export_mimi_and_conditioner.py:245: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if TP:
+<exporter>/scripts/export_mimi_and_conditioner.py:248: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if TP:
+<exporter>/pocket_tts/modules/seanet.py:40: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert x.shape == v.shape, (x.shape, v.shape, x.shape)
+[0;93m2026-11-09 19:39:20.452117956 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_470'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452185308 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_464'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452188370 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_460'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452193339 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_444'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452195773 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_439'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452197542 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_435'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452199379 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_488'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452201063 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_430'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452203141 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_130'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452205641 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_137'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452207434 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_99'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452209468 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_92'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452212991 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_62'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452215829 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_493'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452217711 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_28'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452219759 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_104'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452221257 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_76'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452223203 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_123'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452225535 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_283'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452227649 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_150'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452230144 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_86'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452231932 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_95'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452233641 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_497'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452238164 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_356'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452239951 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_52'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452241930 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_14'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452244168 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_314'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452247150 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_289'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452287038 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_3'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452290075 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_181'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452291814 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_370'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452293869 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_321'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452296120 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_165'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452298059 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_328'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452299524 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_156'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452301133 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_38'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452303633 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_378'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452305328 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_258'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452306985 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_267'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452308866 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_254'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452310677 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_249'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452312595 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_189'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452314757 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_279'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452317440 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_292'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452319172 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_296'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452321086 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_263'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452322611 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_301'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452325426 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_341'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452327498 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_347'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.452329045 [W:onnxruntime:, graph.cc:4885 CleanUnusedInitializersAndNodeArgs] Removing initializer 'val_448'. It is not used by any node and should be removed from the model.[m
+[0;93m2026-11-09 19:39:20.497501932 [W:onnxruntime:, graph.cc:120 MergeShapeInfo] Error merging shape info for output. '_scaled_dot_product_flash_attention_for_cpu_1__1' source:{1,208,32} target:{1,8,208}. Falling back to lenient merge.[m
+[0;93m2026-11-09 19:39:20.497622179 [W:onnxruntime:, graph.cc:120 MergeShapeInfo] Error merging shape info for output. '_scaled_dot_product_flash_attention_for_cpu__1' source:{1,208,32} target:{1,8,208}. Falling back to lenient merge.[m
+Loading model...
+Exporting Mimi Encoder...
+[torch.onnx] Obtain model graph for `MimiEncoderWrapper([...]` with `torch.export.export`...
+[torch.onnx] Obtain model graph for `MimiEncoderWrapper([...]` with `torch.export.export`... ❌
+[torch.onnx] Obtain model graph for `MimiEncoderWrapper([...]` with `torch.export.export(..., strict=False)`...
+[torch.onnx] Obtain model graph for `MimiEncoderWrapper([...]` with `torch.export.export(..., strict=False)`... ❌
+[torch.onnx] Obtain model graph for `MimiEncoderWrapper([...]` with Torch Script...
+[torch.onnx] Obtain model graph for `MimiEncoderWrapper([...]` with Torch Script... ❌
+[torch.onnx] Obtain model graph for `MimiEncoderWrapper([...]` with internal Dynamo apis...
+[torch.onnx] Obtain model graph for `MimiEncoderWrapper([...]` with internal Dynamo apis... ✅
+[torch.onnx] Translate the graph into ONNX...
+[torch.onnx] Translate the graph into ONNX... ✅
+Mimi Encoder exported to /tmp/pocket-current-export/mimi_encoder.onnx
+Exporting Text Conditioner...
+Text Conditioner exported to /tmp/pocket-current-export/text_conditioner.onnx
+Exporting Mimi...
+✅ Generated vocab.json (4000 tokens) & token_scores.json
+Mimi exported to /tmp/pocket-current-export/mimi_decoder.onnx
+Verifying export...
+Verifying Mimi Encoder...
+Mimi Encoder output matches within tolerance.
+Verifying Text Conditioner...
+Text Conditioner output matches within tolerance.
+Mimi audio output matches within tolerance.
+Mimi state 0 matches within tolerance.
+Mimi state 1 matches within tolerance.
+Mimi state 2 matches within tolerance.
+Mimi state 3 matches within tolerance.
+Mimi state 4 matches within tolerance.
+Mimi state 5 matches within tolerance.
+Mimi state 6 matches within tolerance.
+Mimi state 7 matches within tolerance.
+Mimi state 8 matches within tolerance.
+Mimi state 9 matches within tolerance.
+Mimi state 10 matches within tolerance.
+Mimi state 11 matches within tolerance.
+Mimi state 12 matches within tolerance.
+Mimi state 13 matches within tolerance.
+Mimi state 14 matches within tolerance.
+Mimi state 15 matches within tolerance.
+Mimi state 16 matches within tolerance.
+Mimi state 17 matches within tolerance.
+Mimi state 18 matches within tolerance.
+Mimi state 19 matches within tolerance.
+Mimi state 20 matches within tolerance.
+Mimi state 21 matches within tolerance.
+Mimi state 22 matches within tolerance.
+Mimi state 23 matches within tolerance.
+Mimi state 24 matches within tolerance.
+Mimi state 25 matches within tolerance.
+Mimi state 26 matches within tolerance.
+Mimi state 27 matches within tolerance.
+Mimi state 28 matches within tolerance.
+Mimi state 29 matches within tolerance.
+Mimi state 30 matches within tolerance.
+Mimi state 31 matches within tolerance.
+Mimi state 32 matches within tolerance.
+Mimi state 33 matches within tolerance.
+Mimi state 34 matches within tolerance.
+Mimi state 35 matches within tolerance.
+Mimi state 36 matches within tolerance.
+Mimi state 37 matches within tolerance.
+Mimi state 38 matches within tolerance.
+Mimi state 39 matches within tolerance.
+Mimi state 40 matches within tolerance.
+Mimi state 41 matches within tolerance.
+Mimi state 42 matches within tolerance.
+Mimi state 43 matches within tolerance.
+Mimi state 44 matches within tolerance.
+Mimi state 45 matches within tolerance.
+Mimi state 46 matches within tolerance.
+Mimi state 47 matches within tolerance.
+Mimi state 48 matches within tolerance.
+Mimi state 49 matches within tolerance.
+Mimi state 50 matches within tolerance.
+Mimi state 51 matches within tolerance.
+Mimi state 52 matches within tolerance.
+Mimi state 53 matches within tolerance.
+Mimi state 54 matches within tolerance.
+Mimi state 55 matches within tolerance.
+Verification successful!

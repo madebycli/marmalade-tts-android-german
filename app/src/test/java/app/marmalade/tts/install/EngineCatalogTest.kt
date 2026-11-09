@@ -304,7 +304,7 @@ class EngineCatalogTest {
         // has no GPL components, so it's exempt — and its licenseSummary
         // must explicitly state "no GPL" so users can see the difference.
         // Both Pocket variants (prod + clean-room dev) share the GPL-free payload.
-        val pocketEngines = setOf("pocket-tts-en-v2026_04", "pocket-tts-en-v2026_04-dev")
+        val pocketEngines = setOf("pocket-tts-en-v2026_04", "pocket-tts-en-v2026_04-dev", "pocket-tts-de")
         val gplEngines = EngineCatalog.all.filter { it.name !in pocketEngines }
         for (engine in gplEngines) {
             val summary = resources.getString(engine.licenseSummaryRes)
@@ -446,8 +446,9 @@ class EngineCatalogTest {
     fun everyEngineCarriesMaxsQualityGrade() {
         // DO NOT edit these to make a test pass. They are Max's listening
         // grades (2026-10-13, issue #78); changing one means he listened
-        // again. Keyed on every catalog engine, so a new engine fails here
-        // until Max grades it. The developer twin shares Pocket's grade.
+        // again. Every existing grade stays locked. An experimental new
+        // engine can instead have no grade and must render no rating meter.
+        // The developer twin shares Pocket's grade.
         val expected = mapOf(
             "pocket-tts-en-v2026_04" to QualityGrade.EXCELLENT,
             "pocket-tts-en-v2026_04-dev" to QualityGrade.EXCELLENT,
@@ -456,11 +457,13 @@ class EngineCatalogTest {
             "kitten-direct-v0_8" to QualityGrade.GOOD,
             "vits-marmalade-v1" to QualityGrade.BASIC,
         )
-        assertEquals(expected, EngineCatalog.all.associate { it.name to it.quality })
+        // Preserve every existing listening grade; German explicitly has no grade yet.
+        assertEquals(expected, EngineCatalog.all.filter { it.hasMeasuredRatings }.associate { it.name to it.quality })
+        assertEquals(setOf("pocket-tts-de"), EngineCatalog.all.filterNot { it.hasMeasuredRatings }.map { it.name }.toSet())
         // Pocket and Kokoro fill the meter; Kitten is one below, VITS two.
         assertEquals(4, QualityGrade.EXCELLENT.meterFill)
-        assertEquals(3, EngineCatalog.byName("kitten-direct-v0_8")!!.quality.meterFill)
-        assertEquals(2, EngineCatalog.byName("vits-marmalade-v1")!!.quality.meterFill)
+        assertEquals(3, EngineCatalog.byName("kitten-direct-v0_8")!!.quality!!.meterFill)
+        assertEquals(2, EngineCatalog.byName("vits-marmalade-v1")!!.quality!!.meterFill)
     }
 
     @Test

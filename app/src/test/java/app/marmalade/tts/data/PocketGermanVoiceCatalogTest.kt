@@ -43,6 +43,8 @@ class PocketGermanVoiceCatalogTest {
     @Test fun `German entry does not invent a performance or listening rating`() {
         val entry = EngineCatalog.byName(PocketGermanVoiceCatalog.ENGINE)!!
         assertFalse(entry.hasMeasuredRatings)
+        assertNull(entry.quality)
+        assertNull(entry.speedTier)
         assertFalse(entry.isRecommended)
         assertEquals(listOf("de"), entry.languageCodes)
         assertTrue(entry.archive.url.contains("madebycli/marmalade-tts-android-german/"))

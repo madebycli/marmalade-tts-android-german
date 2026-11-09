@@ -45,5 +45,7 @@ class PocketGermanTextTest {
         val cleaned = processor.apply("Am 14. März um 16:30 Uhr: 25% & 3 €.", rules)
         assertEquals("Am vierzehnten März um sechzehn Uhr dreißig: fünfundzwanzig Prozent und drei Euro.",
             PocketGermanText.normalize(cleaned))
+        assertEquals("fünfzig Prozent und Köln nach Düsseldorf, minus vier Grad Celsius.",
+            PocketGermanText.normalize(processor.apply("50 % & Köln → Düsseldorf; −4°C", rules)))
     }
 }

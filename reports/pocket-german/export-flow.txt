@@ -1,0 +1,40 @@
+<exporter>/pocket_tts/modules/rope.py:23: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert (B, T, D) == (Bk, Tk, Dk)
+<exporter>/pocket_tts/modules/rope.py:24: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert D > 0
+<exporter>/pocket_tts/modules/rope.py:25: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert D % 2 == 0
+Loading model...
+✅ Generated vocab.json (4000 tokens) & token_scores.json
+
+Exporting FlowLM Main Model (Backbone)...
+Exported /tmp/pocket-current-export/flow_lm_main.onnx
+
+Exporting Flow Net Model...
+Exported /tmp/pocket-current-export/flow_lm_flow.onnx
+
+Verifying FlowLM exports...
+FlowLM conditioning matches within tolerance.
+FlowLM eos_logit matches within tolerance.
+FlowLM state 0 matches within tolerance.
+FlowLM state 1 matches within tolerance.
+FlowLM state 2 matches within tolerance.
+FlowLM state 3 matches within tolerance.
+FlowLM state 4 matches within tolerance.
+FlowLM state 5 matches within tolerance.
+FlowLM state 6 matches within tolerance.
+FlowLM state 7 matches within tolerance.
+FlowLM state 8 matches within tolerance.
+FlowLM state 9 matches within tolerance.
+FlowLM state 10 matches within tolerance.
+FlowLM state 11 matches within tolerance.
+FlowLM state 12 matches within tolerance.
+FlowLM state 13 matches within tolerance.
+FlowLM state 14 matches within tolerance.
+FlowLM state 15 matches within tolerance.
+FlowLM state 16 matches within tolerance.
+FlowLM state 17 matches within tolerance.
+Flow net output matches within tolerance.
+FlowLM verification successful.
+
+Done! 2-Model split optimization complete.

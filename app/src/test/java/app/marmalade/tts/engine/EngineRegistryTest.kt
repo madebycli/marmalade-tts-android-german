@@ -111,6 +111,7 @@ class EngineRegistryTest {
                 KokoroGermanVoiceCatalog.ENGINE,
                 KittenDirectVoiceCatalog.ENGINE,
                 PocketVoiceCatalog.ENGINE,
+                app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE,
                 VitsVoiceCatalog.ENGINE,
             ),
             registry.warmable.map { it.engineName },

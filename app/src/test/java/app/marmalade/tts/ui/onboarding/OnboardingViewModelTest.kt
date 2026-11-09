@@ -756,6 +756,7 @@ class OnboardingViewModelTest {
         const val KOKORO = KokoroDirectVoiceCatalog.ENGINE
         const val KOKORO_DE = KokoroGermanVoiceCatalog.ENGINE
         const val POCKET = PocketVoiceCatalog.ENGINE
+        const val POCKET_DE = app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE
         const val VITS = VoicePackCatalog.VITS_MARMALADE_ENGINE
 
         /** The engine's default pack — released for v1.1. */
@@ -770,7 +771,7 @@ class OnboardingViewModelTest {
          * on both flavors since issue #29. VITS Marmalade went user-visible
          * for v1.1 (Max, 2026-09-22), so it appears last on this list.
          */
-        val CATALOG_CARDS: List<String> = listOf(KITTEN, KOKORO, KOKORO_DE, POCKET, VITS)
+        val CATALOG_CARDS: List<String> = listOf(KITTEN, KOKORO, KOKORO_DE, POCKET, POCKET_DE, VITS)
 
         /** The built-in Kitten on disk, nothing else: a fresh install after Skip. */
         val KITTEN_ON_DISK: EngineInstaller

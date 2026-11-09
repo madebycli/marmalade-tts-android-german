@@ -29,6 +29,8 @@ with zipfile.ZipFile(apk) as zipped:
     abis = {p.split('/')[1] for p in names if p.startswith('lib/') and p.endswith('.so')}
     assert abis == {'arm64-v8a'}, abis
     assert not any('pocket-tts-de' in p or 'voice_states/' in p or p.endswith('.safetensors') for p in names), 'German weights in APK'
+    pocket_payloads = {'flow_lm_main_int8.onnx', 'flow_lm_flow.onnx', 'mimi_encoder.onnx', 'mimi_decoder.onnx', 'text_conditioner.onnx'}
+    assert not any(p.startswith('assets/') and (p.rsplit('/', 1)[-1] in pocket_payloads or p.endswith('.prompt.gz')) for p in names)
     assert 'lib/arm64-v8a/libespeak-ng.so' in names
 sdk = Path(os.environ['ANDROID_HOME'])
 aapt = sdk / 'build-tools/36.0.0/aapt2'

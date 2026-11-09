@@ -79,20 +79,22 @@ fun EngineSpecColumn(
         modifier = modifier.width(118.dp),
         verticalArrangement = Arrangement.Top,
     ) {
-        if (engine.hasMeasuredRatings) {
+        val speed = engine.speedTier
+        val quality = engine.quality
+        if (speed != null && quality != null) {
             SpecRow(label = stringResource(R.string.engine_spec_speed), labelSpoken = false) {
                 // Meter only — the tier word ("Fastest"/"Fast"/"Moderate"/"Heavy") is dropped
                 // from the card and carried as the meter's contentDescription, so
                 // the visual stays a bare gauge while TalkBack still names the tier
                 // for anyone who can't read fill length or colour.
                 SpeedMeter(
-                    tier = engine.speedTier,
+                    tier = speed,
                     modifier = Modifier.padding(top = 2.dp),
                 )
             }
             SpecRow(label = stringResource(R.string.engine_spec_quality), labelSpoken = false) {
                 QualityMeter(
-                    quality = engine.quality,
+                    quality = quality,
                     modifier = Modifier.padding(top = 2.dp),
                 )
             }
