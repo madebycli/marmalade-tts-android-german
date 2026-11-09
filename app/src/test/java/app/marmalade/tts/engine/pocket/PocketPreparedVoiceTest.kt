@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream
 import java.io.DataOutputStream
 import java.io.File
 import java.util.zip.GZIPOutputStream
+import java.util.concurrent.CancellationException
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
@@ -53,5 +54,27 @@ class PocketPreparedVoiceTest {
         val file = voice()
         try { PocketPreparedVoice.validate(file, listOf(spec.copy(shape = longArrayOf(2, 1)))); fail() }
         catch (_: IllegalArgumentException) { }
+    }
+
+    @Test fun `cancelled load does not open or consume a voice`() {
+        val stopped = CancellationException("Stopped")
+        try {
+            PocketPreparedVoice.read(File(tmp.root, "not-opened.gz"), manifest,
+                checkActive = { throw stopped }) { _, _, _ -> fail("Cancelled voice consumed") }
+            fail()
+        } catch (actual: CancellationException) { assertSame(stopped, actual) }
+    }
+
+    @Test fun `cancellation after payload is propagated before a voice is accepted`() {
+        val stopped = CancellationException("Stopped")
+        var consumed = false
+        try {
+            PocketPreparedVoice.read(voice(), manifest,
+                checkActive = { if (consumed) throw stopped }) { _, input, count ->
+                input.readFully(ByteArray(count)); consumed = true
+            }
+            fail()
+        } catch (actual: CancellationException) { assertSame(stopped, actual) }
+        assertTrue(consumed)
     }
 }

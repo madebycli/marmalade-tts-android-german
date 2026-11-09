@@ -12,7 +12,10 @@ import java.util.zip.GZIPInputStream
  */
 internal object PocketPreparedVoice {
     private const val MAGIC = 0x50505331 // PPS1
-    private fun open(file: File) = DataInputStream(BufferedInputStream(GZIPInputStream(file.inputStream())))
+    private const val IO_BUFFER_BYTES = 64 * 1024
+    private fun open(file: File) = DataInputStream(BufferedInputStream(
+        GZIPInputStream(file.inputStream(), IO_BUFFER_BYTES), IO_BUFFER_BYTES,
+    ))
     fun rows(file: File): Int = open(file).use { input ->
         require(input.readInt() == MAGIC) { "Invalid Pocket voice header" }
         input.readInt().also { require(it in 1..999) { "Invalid Pocket prompt length" } }
@@ -35,13 +38,20 @@ internal object PocketPreparedVoice {
             }
         }
     }
-    fun read(file: File, manifest: List<PocketBundle.StateSpec>, consume: (PocketBundle.StateSpec, DataInputStream, Int) -> Unit) {
+    fun read(
+        file: File,
+        manifest: List<PocketBundle.StateSpec>,
+        checkActive: () -> Unit = {},
+        consume: (PocketBundle.StateSpec, DataInputStream, Int) -> Unit,
+    ) {
+        checkActive()
         open(file).use { input ->
             require(input.readInt() == MAGIC) { "Invalid Pocket voice header" }
             require(input.readInt() in 1..999) { "Invalid Pocket prompt length" }
             require(input.readInt() == manifest.size) { "Pocket voice state count mismatch" }
             var total = 0L
             for (spec in manifest) {
+                checkActive()
                 require(input.readInt() == spec.index) { "Pocket voice state order mismatch" }
                 require(input.readInt() == spec.dtype.ordinal) { "Pocket voice dtype mismatch" }
                 require(input.readInt() == spec.shape.size) { "Pocket voice rank mismatch" }
@@ -60,6 +70,7 @@ internal object PocketPreparedVoice {
                 require(input.readInt().toLong() == bytes) { "Pocket voice byte count mismatch" }
                 consume(spec, input, bytes.toInt())
             }
+            checkActive()
             require(input.read() == -1) { "Trailing Pocket voice data" }
         }
     }

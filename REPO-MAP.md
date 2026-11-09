@@ -1901,4 +1901,11 @@ write Marmalade code.
 
 ## German test fork (2026-11-09)
 
+Prepared voice states use deferred `PocketStateSlot` initialization: every byte
+must be loaded before binding, so the large fixed KV buffers are not redundantly
+filled with NaNs. The PPS1 reader and 64 KiB copy loop accept the request's
+cancellation check; do not remove it or cancelled playback blocks newer speech
+behind `synthLock`. `PocketPreparedStateTest` covers completeness and cancellation.
+Separate allocation/read/bind timings are logged under the existing perf tag.
+
 `PocketGermanEngine` subclasses the production `PocketEngine`; engine directories, defaults, clone IDs and text normalization are instance-specific. `EngineRegistry` remains the dispatch table, including CHECK_TTS_DATA. The German catalog has all27official IDs, default Anna, with separate credits from the English voices (German Mary is VCTK). `PocketPreparedVoice` reads manifest-checked PPS1 compressed official KV states into the existing StateFrame cache; no second runtime. The current public non-cloning checkpoint is exported with the pinned preserved exporter and its matching tokenizer. This engine explicitly rejects the dormant clone API. `scripts/pocket-bundle/` contains export, packaging and verification tools. See `GERMAN_POCKET.md` and `reports/pocket-german/` for executed checks and untested device behavior. The fork test ID is `app.marmalade.tts.de.debug`; German data downloads from this fork on opt-in and never ships in the APK. Original download URLs are unchanged. Ratings are hidden for the unmeasured German engine.

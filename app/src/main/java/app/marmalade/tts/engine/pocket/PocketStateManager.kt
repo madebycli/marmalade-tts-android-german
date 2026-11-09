@@ -68,6 +68,7 @@ class PocketStateSlot(
     val dtype: PocketBundle.StateDtype,
     initialShape: LongArray,
     private val initialFill: PocketBundle.StateFill,
+    initialize: Boolean = true,
 ) {
     /** Current logical shape. Mutated by [updateFromOutput] when growth is observed. */
     var shape: LongArray = initialShape.copyOf()
@@ -76,6 +77,9 @@ class PocketStateSlot(
     private val elementBytes: Int = bytesPerElement(dtype)
     private var capacityElements: Int = maxOf(elementCount(initialShape), 1)
     private var buffer: ByteBuffer = newNativeDirectBuffer(capacityElements * elementBytes)
+    /** Deferred slots must receive a complete verified payload before ORT can read them. */
+    internal var hasData: Boolean = initialize
+        private set
 
     init {
         // Fill the buffer's current-shape window with the init value.
@@ -83,7 +87,7 @@ class PocketStateSlot(
         // the unused tail is left at whatever ByteBuffer.allocateDirect
         // gives us (typically zero, but unspecified — bounded by limit/position
         // so unused bytes never reach ORT).
-        fillRange(buffer, dtype, initialFill, elementCount(shape))
+        if (initialize) fillRange(buffer, dtype, initialFill, elementCount(shape))
     }
 
     /**
@@ -98,6 +102,7 @@ class PocketStateSlot(
      * per-call alloc stays for this copying path.
      */
     fun bindAsTensor(env: OrtEnvironment): OnnxTensor {
+        check(hasData) { "Pocket state has no complete payload" }
         val numElements = elementCount(shape)
         buffer.position(0)
         buffer.limit(numElements * elementBytes)
@@ -119,13 +124,20 @@ class PocketStateSlot(
      * views from [out] become invalid after close.
      */
     /** Bundle-verified official voice state; little-endian raw tensors, same shape as this slot. */
-    internal fun loadPreparedBytes(input: java.io.InputStream, count: Int) {
+    internal fun loadPreparedBytes(
+        input: java.io.InputStream,
+        count: Int,
+        checkActive: () -> Unit = {},
+    ) {
         require(java.nio.ByteOrder.nativeOrder() == java.nio.ByteOrder.LITTLE_ENDIAN)
         require(count == elementCount(shape) * elementBytes)
+        hasData = false
+        checkActive()
         buffer.clear()
         val chunk = ByteArray(minOf(count, 64 * 1024))
         var remaining = count
         while (remaining > 0) {
+            checkActive()
             val n = input.read(chunk, 0, minOf(chunk.size, remaining))
             if (n < 0) throw java.io.EOFException("Truncated Pocket voice state")
             if (n == 0) continue
@@ -133,6 +145,8 @@ class PocketStateSlot(
             remaining -= n
         }
         buffer.flip()
+        checkActive()
+        hasData = true
     }
 
     fun updateFromOutput(out: OnnxTensor) {
@@ -171,6 +185,7 @@ class PocketStateSlot(
             }
         }
         shape = outShape
+        hasData = true
     }
 }
 
@@ -183,13 +198,14 @@ typealias PocketStates = MutableMap<String, PocketStateSlot>
  * The map's iteration order matches the manifest order, which simplifies
  * binding.
  */
-fun initStates(manifest: List<PocketBundle.StateSpec>): PocketStates {
+fun initStates(manifest: List<PocketBundle.StateSpec>, initialize: Boolean = true): PocketStates {
     val out = LinkedHashMap<String, PocketStateSlot>(manifest.size)
     for (spec in manifest) {
         out[spec.inputName] = PocketStateSlot(
             dtype = spec.dtype,
             initialShape = spec.shape,
             initialFill = spec.fill,
+            initialize = initialize,
         )
     }
     return out

@@ -541,7 +541,7 @@ open class PocketEngine @Inject constructor(
      * without warm caches. Logged so we know if a build silently
      * regressed warmup.
      */
-    private fun warmupSynth() {
+    private suspend fun warmupSynth() {
         val tStart = System.currentTimeMillis()
         try {
             val bundle = bundle ?: return
@@ -551,7 +551,9 @@ open class PocketEngine @Inject constructor(
             val preprocessed = preprocessForPocket(warmupText, bundle)
             val tokens = tokenizer.encode(preprocessed)
             val phases = ArrayList<PhaseSpan>(2)
-            val ar = startArSession(bundle, voiceEmb, tokens, preprocessed, phases = phases)
+            val requestContext = coroutineContext
+            val ar = startArSession(bundle, voiceEmb, tokens, preprocessed, phases = phases,
+                checkActive = { requestContext.ensureActive() })
             for (p in phases) {
                 Log.d(PERF_TAG, "pocket warmup prefill ${p.name}=${p.ms}ms${p.detail?.let { " ($it)" } ?: ""}")
             }
@@ -574,6 +576,8 @@ open class PocketEngine @Inject constructor(
                 runMimiDecoder(bundle, flat, mimiState ?: return)
             }
             Log.i(TAG, "Pocket warmup synth completed in ${System.currentTimeMillis() - tStart} ms")
+        } catch (cancelled: kotlinx.coroutines.CancellationException) {
+            throw cancelled
         } catch (t: Throwable) {
             Log.w(TAG, "Pocket warmup failed (non-fatal): ${t.message}")
         }
@@ -1069,7 +1073,9 @@ open class PocketEngine @Inject constructor(
         // P-AM.1: time the per-chunk prefill (phase 1 voice cond + phase 2
         // text cond) so logcat shows prefill vs AR-loop share directly.
         val phases = ArrayList<PhaseSpan>(2)
-        val ar = startArSession(bundle, voiceEmb, tokens, preprocessed, phases = phases)
+        val requestContext = coroutineContext
+        val ar = startArSession(bundle, voiceEmb, tokens, preprocessed, phases = phases,
+            checkActive = { requestContext.ensureActive() })
         for (p in phases) {
             Log.d(PERF_TAG, "pocket chunk=$chunkIdx prefill ${p.name}=${p.ms}ms${p.detail?.let { " ($it)" } ?: ""}")
         }
@@ -1567,7 +1573,9 @@ open class PocketEngine @Inject constructor(
         tokens: IntArray,
         originalText: String,
         phases: MutableList<PhaseSpan>?,
+        checkActive: () -> Unit = {},
     ): ArSession {
+        checkActive()
         val ort = env ?: error("ORT env missing")
         val main = flowLmMainSession ?: error("flow_lm_main session missing")
         val flow = flowLmFlowSession ?: error("flow_lm_flow session missing")
@@ -1593,19 +1601,33 @@ open class PocketEngine @Inject constructor(
         val carry = if (cachedPrompt != null) {
             PocketStateCarry(cachedPrompt.retain())
         } else if (voiceInput.prepared != null) {
-            val states = initStates(manifest)
-            PocketPreparedVoice.read(voiceInput.prepared, manifest) { spec, input, count ->
-                states.getValue(spec.inputName).loadPreparedBytes(input, count)
+            // The prepared file replaces every byte. Filling the large fixed KV
+            // caches with NaNs first adds millions of unnecessary buffer writes.
+            val states = initStates(manifest, initialize = false)
+            val allocatedAt = System.currentTimeMillis()
+            PocketPreparedVoice.read(voiceInput.prepared, manifest, checkActive) { spec, input, count ->
+                states.getValue(spec.inputName).loadPreparedBytes(input, count, checkActive)
             }
+            val readAt = System.currentTimeMillis()
+            checkActive()
             val frame = PocketStateCarry.bindSlots(ort, manifest, states)
+            try {
+                checkActive()
+            } catch (t: Throwable) {
+                frame.release()
+                throw t
+            }
             voicePrompt?.frame?.release()
             voicePrompt = VoicePrompt(voiceInput.identity, cacheLen, frame.retain())
+            Log.d(PERF_TAG, "$engineName prepared voice allocate=${allocatedAt - carryStartedAt}ms " +
+                "read=${readAt - allocatedAt}ms bind=${System.currentTimeMillis() - readAt}ms")
             PocketStateCarry(frame)
         } else {
             val init = flowInitStates.getOrPut(cacheLen ?: 0) { initStates(manifest) }
             PocketStateCarry(PocketStateCarry.bindSlots(ort, bundle.flowLmStateManifest, init))
         }
         try {
+            checkActive()
             // PHASE 1: voice conditioning.
             // text_embeddings = bos_before_voice ++ voice_embedding, shape [1, V+1, conditioningDim]
             val phase1Start = if (voiceInput.prepared != null) carryStartedAt else System.currentTimeMillis()
@@ -1648,6 +1670,7 @@ open class PocketEngine @Inject constructor(
             )
 
             // PHASE 2: text conditioning.
+            checkActive()
             val phase2Start = System.currentTimeMillis()
             val tcStart = System.currentTimeMillis()
             val textEmbeds = runTextConditioner(textCond, tokens, bundle, ort)
