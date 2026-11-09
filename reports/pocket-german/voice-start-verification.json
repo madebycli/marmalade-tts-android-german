@@ -1,0 +1,41 @@
+{
+  "source_commit": "9d87b536c3097777b82a0717f0c29c6ab4ed0b47",
+  "android_ci": "https://github.com/madebycli/marmalade-tts-android-german/actions/runs/42703052871",
+  "apk": {
+    "release": "pocket-de-test-9d87b53",
+    "bytes": 124836372,
+    "sha256": "a5df696b98abfcf66f7e8c7b2b7b2d381cfa95fa529e8630b82f750bab7aa6c9",
+    "download_verified": true,
+    "signature_verified": true,
+    "certificate_sha256": "3214970e98e3672776f11fa1cef1a618143364abb869dc3e4e17462d5e118bc1",
+    "same_signer_as_previous_test": false,
+    "package": "app.marmalade.tts.de.debug",
+    "abi": "arm64-v8a",
+    "fix_present_in_dex": true,
+    "german_model_data_embedded": false
+  },
+  "tests": {
+    "testFdroidDebugUnitTest": {
+      "tests": 1944,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "testPlayDebugUnitTest": {
+      "tests": 1944,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "device_tests": false,
+    "apk_size": 124836372,
+    "abi": "arm64-v8a",
+    "package": "app.marmalade.tts.de.debug",
+    "german_weights_in_apk": false
+  },
+  "kotlin_prompt_reader_complete_files": 27,
+  "model_archive_unchanged": true,
+  "model_sha256": "47f36b2862f81fe8faf85722377e1898417206aa2faf2ffff37a9c4214e517ef",
+  "device_test_performed": false,
+  "performance_improvement_on_phone_measured": false
+}

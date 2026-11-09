@@ -5,9 +5,22 @@ Keine Änderungen, Issues, Kommentare oder PRs wurden an Upstream gesendet.
 
 ## Installation und erster Test
 
-Die fertige [Test-APK auf GitHub](https://github.com/madebycli/marmalade-tts-android-german/releases/tag/pocket-de-test-11b342dc) ist aus Quellstand `11b342dc` gebaut.
+Die aktuelle [Test-APK auf GitHub](https://github.com/madebycli/marmalade-tts-android-german/releases/tag/pocket-de-test-9d87b53) ist aus Quellstand `9d87b53` gebaut.
 Sie installiert sich als **Marmalade TTS Deutsch / German**, Paket
 `app.marmalade.tts.de.debug`, neben der Original-App.
+
+**Update vom vorherigen Testbuild:** Die Signatur unterscheidet sich von
+`11b342dc`. Ein direktes Update ist deshalb nicht möglich. Eine Deinstallation
+der alten Test-App löscht deren Einstellungen und heruntergeladene Modelle;
+danach müssen sie erneut eingerichtet/heruntergeladen werden. Die Original-App
+ist davon nicht betroffen. Für spätere Updates fehlt noch ein dauerhafter,
+sicher verwalteter Signierschlüssel.
+
+Der neue Build entfernt unnötige Speicherbefüllung beim Laden vorbereiteter
+Stimmen und macht diesen Vorgang abbrechbar. Anlass war eine 15,4 Sekunden lange
+Vorbereitungsphase im Nutzerlog. **3.888 JVM-Tests bestanden**, einschließlich
+elf neuer Tests pro Distribution. Eine Verbesserung auf dem Telefon muss noch
+geprüft werden. [Diagnose, Messgrenzen und Testschritte](reports/pocket-german/voice-start-fix.md).
 
 1. APK installieren und in der bestehenden Einrichtung **Pocket TTS German** wählen;
    alternativ später unter **Engines** installieren.

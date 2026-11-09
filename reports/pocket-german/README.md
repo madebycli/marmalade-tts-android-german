@@ -1,5 +1,12 @@
 # Executed verification
 
+- `voice-start-fix.md`: sanitized diagnosis and follow-up phone checks for slow
+  prepared-voice loading and cancellation. The original private log is not in Git.
+- `voice-start-android-ci.json`, `voice-start-verification.json`: source9d87b53,
+  run42703052871;1944tests per distribution,0failures/errors/skips. Downloaded
+  APK hash, signature, ARM64 and fix-in-DEX checks. Different test certificate
+  from the earlier APK; no in-place update. No post-fix phone result claimed.
+
 - `android-ci.json`: actual final Gradle XML counts,1933tests per distribution,0failures/errors/skips; source11b342dc, run42694557306.
 - `apk-verification.txt`: CI apksigner output; the published APK was also downloaded and checked locally.
 - `verification.json`: exact APK/model sizes, hashes, published-download checks, source and run IDs, and honest device-test flags.

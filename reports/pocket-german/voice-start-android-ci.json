@@ -1,0 +1,19 @@
+{
+  "testFdroidDebugUnitTest": {
+    "tests": 1944,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "testPlayDebugUnitTest": {
+    "tests": 1944,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "device_tests": false,
+  "apk_size": 124836372,
+  "abi": "arm64-v8a",
+  "package": "app.marmalade.tts.de.debug",
+  "german_weights_in_apk": false
+}

@@ -38,8 +38,30 @@ The existing model archive SHA-256 remains
 
 Eleven regression tests added: complete/empty/truncated/wrong-size states,
 default initialization, cancellation before and during loading, retry, failed
-overwrite, and reader cancellation. CI results and APK details will be recorded
-after the build completes. No emulator or device test was performed.
+overwrite, and reader cancellation.
+
+- Source `9d87b536c3097777b82a0717f0c29c6ab4ed0b47`;
+  [Android CI 42703052871](https://github.com/madebycli/marmalade-tts-android-german/actions/runs/42703052871)
+  succeeded. 1,944 F-Droid and 1,944 Play tests, 3,888 total; no failures, errors
+  or skips. The downloaded XML includes all 9 state tests and 12 reader tests
+  for each distribution (including the 11 newly added cases).
+- Recompiled production Kotlin reader validated all 27 complete published
+  German prompt files. No model or voice file was regenerated.
+- ARM64 debug APK built, downloaded from the release, SHA-256 and v2 signature
+  checked locally; new diagnostic string present in DEX. No German weights or
+  voice states embedded. See `voice-start-verification.json` and
+  `voice-start-android-ci.json` for machine-readable results.
+- No emulator or device test was performed. Phone performance after the fix
+  has not been measured.
+
+[Test APK](https://github.com/madebycli/marmalade-tts-android-german/releases/tag/pocket-de-test-9d87b53),
+124,836,372 bytes; SHA-256
+`a5df696b98abfcf66f7e8c7b2b7b2d381cfa95fa529e8630b82f750bab7aa6c9`.
+
+The new temporary debug certificate differs from the previous `11b342dc` APK.
+It cannot update that installation in place. Removing the previous test app
+deletes its private settings and downloaded models; download/install the German
+model again afterwards. The original Marmalade app uses a different package.
 
 ## Phone checks
 
@@ -50,6 +72,5 @@ after the build completes. No emulator or device test was performed.
 4. Export the log after any silence. Look for `prepared voice allocate=… read=…
    bind=…` and subsequent first-PCM/audio-start events.
 
-Use speed 1.0 initially. No requirement to replace the German model archive.
-The temporary CI debug signing key can differ between APK builds; check the
-release installation note before attempting an update.
+Use speed 1.0 initially. The model archive itself is unchanged. See the signing
+and installation limitation above before replacing the old test app.
