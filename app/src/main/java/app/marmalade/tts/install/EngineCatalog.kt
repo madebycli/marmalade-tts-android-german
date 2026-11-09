@@ -210,6 +210,7 @@ data class EngineDescriptor(
      *    and per-pack update detection lives on the pack, not here.
      */
     val defaultPackId: String? = null,
+    val hasMeasuredRatings: Boolean = true,
 ) {
     /** True when this engine installs per-language voice packs — see [defaultPackId]. */
     val isPackBased: Boolean get() = defaultPackId != null
@@ -514,6 +515,31 @@ object EngineCatalog {
      * regular Pocket ships on both flavors (Max, 2026-10-09, issue #29),
      * this diagnostic twin stays off Play.
      */
+    /** German six-layer checkpoint, all 27 official voice states; downloaded only on opt-in. */
+    private val POCKET_TTS_DE: EngineDescriptor = EngineDescriptor(
+        name = "pocket-tts-de",
+        displayName = "Pocket TTS German",
+        releaseName = "Pocket TTS German (6 layers, test 1)",
+        descriptionRes = R.string.engine_pocket_de_desc,
+        downloadSizeBytes = 267_986_165L,
+        installedSizeBytes = 368_157_700L,
+        isRecommended = false,
+        archive = EngineArchive(
+            url = "https://github.com/madebycli/marmalade-tts-android-german/releases/download/pocket-de-bundle-v1/pocket-tts-de.tar.gz",
+            sha256 = "5c89352bb0278969b2f0cae68afc5e1567ecda1f802950617f4c1bc3f2fc9d20",
+            sizeBytes = 267_986_165L,
+            archiveRoot = "pocket-tts-de/",
+        ),
+        licenseNotice = "LICENSES/pocket-tts-de.md",
+        licenseSummaryRes = R.string.engine_pocket_de_license,
+        taglineRes = R.string.engine_pocket_de_tagline,
+        // These inherited family values are deliberately hidden until actual listening/device tests.
+        speedTier = POCKET_TTS_EN.speedTier,
+        quality = POCKET_TTS_EN.quality,
+        hasMeasuredRatings = false,
+        languageCodes = listOf("de"),
+    )
+
     private val POCKET_TTS_EN_DEV: EngineDescriptor = EngineDescriptor(
         name = "pocket-tts-en-v2026_04-dev",
         displayName = "Pocket TTS Clean",
@@ -611,6 +637,7 @@ object EngineCatalog {
         KOKORO_DIRECT,
         KOKORO_GERMAN,
         POCKET_TTS_EN,
+        POCKET_TTS_DE,
         POCKET_TTS_EN_DEV,
         VITS_MARMALADE,
     )

@@ -52,6 +52,7 @@ data class VoiceCredit(
 object VoiceCredits {
 
     fun forVoice(voice: VoiceMeta): VoiceCredit? = when (voice.engine) {
+        PocketGermanVoiceCatalog.ENGINE -> PocketGermanVoiceCatalog.creditFor(voice.id.substringAfter(':'))
         PocketVoiceCatalog.ENGINE, PocketDevVoiceCatalog.ENGINE ->
             PocketVoiceCatalog.creditFor(voice.id.substringAfter(':'))
         VitsVoiceCatalog.ENGINE ->

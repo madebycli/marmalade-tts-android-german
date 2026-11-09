@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_pocket_de_desc">German Pocket checkpoint with all 27 official voices. Experimental; phone performance and voice quality have not been rated. Some voices are for non-commercial use only.</string>
+    <string name="engine_pocket_de_tagline">German speech with 27 official Pocket voices.</string>
+    <string name="engine_pocket_de_license">Model CC BY 4.0; code MIT; voices CC0, CC BY 4.0 and CC BY-NC 4.0. Cosette and Jean: non-commercial use only.</string>
+    <string name="pocket_de_fixed_language">This Pocket checkpoint speaks German.</string>
+    <string name="pocket_de_language_name">German</string>
+</resources>

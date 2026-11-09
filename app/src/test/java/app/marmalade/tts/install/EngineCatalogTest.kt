@@ -47,6 +47,7 @@ class EngineCatalogTest {
                 // sits with the Kokoro family, ahead of Pocket.
                 "kokoro-de-v1_0",
                 "pocket-tts-en-v2026_04",
+                "pocket-tts-de",
                 // Developer-only clean-room Pocket (diagnostic; shares the
                 // production Pocket bundle payload).
                 "pocket-tts-en-v2026_04-dev",
@@ -70,6 +71,7 @@ class EngineCatalogTest {
                 "kokoro-direct-v1_0" to "Kokoro",
                 "kokoro-de-v1_0" to "Kokoro German",
                 "pocket-tts-en-v2026_04" to "Pocket TTS",
+                "pocket-tts-de" to "Pocket TTS German",
                 "pocket-tts-en-v2026_04-dev" to "Pocket TTS Clean",
                 "vits-marmalade-v1" to "VITS Marmalade",
             ),

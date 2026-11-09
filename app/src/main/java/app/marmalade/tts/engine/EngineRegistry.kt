@@ -38,11 +38,12 @@ class EngineRegistry internal constructor(engines: List<TtsEngine>) {
         kokoroGerman: KokoroGermanEngine,
         kittenDirect: KittenDirectEngine,
         pocket: PocketEngine,
+        pocketGerman: PocketGermanEngine,
         pocketDev: PocketDevEngine,
         vits: VitsDirectEngine,
         cloudApi: CloudApiEngine,
         buildTypeEngines: Set<@JvmSuppressWildcards TtsEngine>,
-    ) : this(listOf(kokoroDirect, kokoroGerman, kittenDirect, pocket, pocketDev, vits, cloudApi) + buildTypeEngines)
+    ) : this(listOf(kokoroDirect, kokoroGerman, kittenDirect, pocket, pocketGerman, pocketDev, vits, cloudApi) + buildTypeEngines)
 
     private val table: Map<String, TtsEngine> = engines.associateByTo(LinkedHashMap()) { it.engineName }
 
@@ -83,6 +84,7 @@ class EngineRegistry internal constructor(engines: List<TtsEngine>) {
             KokoroGermanVoiceCatalog.ENGINE,
             KittenDirectVoiceCatalog.ENGINE,
             PocketVoiceCatalog.ENGINE,
+            app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE,
             PocketDevVoiceCatalog.ENGINE,
             VitsVoiceCatalog.ENGINE,
             CloudApiVoiceCatalog.ENGINE,

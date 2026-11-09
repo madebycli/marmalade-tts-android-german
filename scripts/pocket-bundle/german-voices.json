@@ -1,0 +1,218 @@
+[
+  {
+    "key": "anna",
+    "reference": "hf://kyutai/tts-voices/vctk/p228_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  },
+  {
+    "key": "alba",
+    "reference": "hf://kyutai/tts-voices/alba-mackenna/casual.wav",
+    "credit": "Alba MacKenna (Kyutai)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": null
+  },
+  {
+    "key": "azelma",
+    "reference": "hf://kyutai/tts-voices/vctk/p303_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  },
+  {
+    "key": "bill_boerst",
+    "reference": "hf://kyutai/tts-voices/voice-zero/bill_boerst.wav",
+    "credit": "Voice-Zero / LibriVox",
+    "voice_license": "CC0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "caro_davy",
+    "reference": "hf://kyutai/tts-voices/voice-zero/caro_davy.wav",
+    "credit": "Voice-Zero / LibriVox",
+    "voice_license": "CC0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  },
+  {
+    "key": "charles",
+    "reference": "hf://kyutai/tts-voices/vctk/p254_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "cosette",
+    "reference": "hf://kyutai/tts-voices/expresso/ex04-ex02_confused_001_channel1_499s.wav",
+    "credit": "Expresso",
+    "voice_license": "CC BY-NC 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  },
+  {
+    "key": "daan",
+    "reference": "hf://kyutai/pocket-tts/cml_tts_nl_11290_9412_000030_0001.flac@2dd944b099d06bb9edbd221fef138685711d9bf0",
+    "credit": "Kyutai (official Pocket voice catalog)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "eponine",
+    "reference": "hf://kyutai/tts-voices/vctk/p262_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  },
+  {
+    "key": "estelle",
+    "reference": "hf://kyutai/tts-voices/unmute-prod-website/developpeuse-3.wav@1fc7395b7e012e2bbebfca14b942a4ef62ccc899",
+    "credit": "Kyutai Unmute",
+    "voice_license": "CC0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  },
+  {
+    "key": "eve",
+    "reference": "hf://kyutai/tts-voices/vctk/p361_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  },
+  {
+    "key": "fantine",
+    "reference": "hf://kyutai/tts-voices/vctk/p244_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  },
+  {
+    "key": "george",
+    "reference": "hf://kyutai/tts-voices/vctk/p315_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "giovanni",
+    "reference": "hf://kyutai/pocket-tts/common_voice_it_36520747-enhanced-v2.mp3@64ab7d24c479d736a83b8cc666c4a776fca30fda",
+    "credit": "Kyutai (official Pocket voice catalog)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "jane",
+    "reference": "hf://kyutai/tts-voices/vctk/p339_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  },
+  {
+    "key": "javert",
+    "reference": "hf://kyutai/tts-voices/voice-donations/Butter.wav",
+    "credit": "Kyutai Unmute voice donation",
+    "voice_license": "CC0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "jean",
+    "reference": "hf://kyutai/tts-voices/ears/p010/freeform_speech_01_enhanced.wav",
+    "credit": "EARS (University of Hamburg)",
+    "voice_license": "CC BY-NC 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "juergen",
+    "reference": "hf://kyutai/pocket-tts/de-DE-juergen.mp3@64ab7d24c479d736a83b8cc666c4a776fca30fda",
+    "credit": "Kyutai (official Pocket voice catalog)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "lola",
+    "reference": "hf://kyutai/pocket-tts/common_voice_es_19762977-enhanced-v2.mp3@64ab7d24c479d736a83b8cc666c4a776fca30fda",
+    "credit": "Kyutai (official Pocket voice catalog)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  },
+  {
+    "key": "marius",
+    "reference": "hf://kyutai/tts-voices/voice-donations/Selfie.wav",
+    "credit": "Kyutai Unmute voice donation",
+    "voice_license": "CC0",
+    "embedding_license": "CC BY 4.0",
+    "gender": null
+  },
+  {
+    "key": "mary",
+    "reference": "hf://kyutai/tts-voices/vctk/p333_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  },
+  {
+    "key": "michael",
+    "reference": "hf://kyutai/tts-voices/vctk/p360_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "paul",
+    "reference": "hf://kyutai/tts-voices/vctk/p259_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "peter_yearsley",
+    "reference": "hf://kyutai/tts-voices/voice-zero/peter_yearsley.wav",
+    "credit": "Voice-Zero / LibriVox",
+    "voice_license": "CC0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "rafael",
+    "reference": "hf://kyutai/pocket-tts/g-Vi8PgmSY0-enhanced-v2.wav@64ab7d24c479d736a83b8cc666c4a776fca30fda",
+    "credit": "Kyutai (official Pocket voice catalog)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "stuart_bell",
+    "reference": "hf://kyutai/tts-voices/voice-zero/stuart_bell.wav",
+    "credit": "Voice-Zero / LibriVox",
+    "voice_license": "CC0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "male"
+  },
+  {
+    "key": "vera",
+    "reference": "hf://kyutai/tts-voices/vctk/p229_023_enhanced.wav",
+    "credit": "VCTK (University of Edinburgh)",
+    "voice_license": "CC BY 4.0",
+    "embedding_license": "CC BY 4.0",
+    "gender": "female"
+  }
+]

@@ -120,7 +120,15 @@ open class PocketEngine @Inject constructor(
      */
     override val supportsNativeSpeed: Boolean = false
 
-    private val engineDir: File get() = File(ctx.filesDir, "engines/$ENGINE_NAME")
+    // Fork: a language bundle shares every inference/streaming implementation.
+    protected open val defaultVoiceKey: String get() = PocketVoiceFiles.DEFAULT_KEY
+    protected open val offeredVoiceKeys: List<String>
+        get() = PocketVoiceCatalog.voices.map { it.id.substringAfter(':') }
+    protected open val warmupText: String get() = "Hi."
+    protected open val supportsVoiceCloning: Boolean get() = true
+    protected open fun prepareLanguageText(raw: String): String = raw
+
+    private val engineDir: File get() = File(ctx.filesDir, "engines/$engineName")
     private val voicesDir: File get() = File(engineDir, "voices")
     private val voiceCacheDir: File get() = File(engineDir, "voice_cache")
     private val clonedVoicesDir: File get() = File(engineDir, "cloned_voices")
@@ -129,7 +137,7 @@ open class PocketEngine @Inject constructor(
      * A request for a voice the installed download lacks (v21 has five of
      * v27's ten) speaks with the default voice instead of failing (#44).
      */
-    private val voiceFallback = PocketVoiceFallback(isPresent = { PocketVoiceFiles.has(engineDir, it) }) { requested, used ->
+    private val voiceFallback = PocketVoiceFallback(isPresent = { PocketVoiceFiles.has(engineDir, it) }, defaultKey = { defaultVoiceKey }) { requested, used ->
         Log.w(TAG, "voice '$requested' is not in the installed Pocket download; speaking with '$used' (updating Pocket adds it)")
     }
 
@@ -193,7 +201,18 @@ open class PocketEngine @Inject constructor(
      */
     private var voicePrompt: VoicePrompt? = null
 
-    private class VoicePrompt(val embedding: FloatArray, val cacheLen: Int?, val frame: StateFrame)
+    private class VoicePrompt(val identity: Any, val cacheLen: Int?, val frame: StateFrame)
+    private class VoiceInput(val embedding: FloatArray?, val prepared: File?, val rows: Int) {
+        val identity: Any get() = embedding ?: prepared!!.absolutePath
+    }
+    private fun voiceInput(name: String): VoiceInput {
+        val prepared = File(engineDir, "voice_states/$name.prompt.gz")
+        if (prepared.isFile) return VoiceInput(null, prepared,
+            app.marmalade.tts.engine.pocket.PocketPreparedVoice.rows(prepared))
+        val data = embeddingForVoice(name)
+        val bos = if (bundle?.insertBosBeforeVoice == true) 1 else 0
+        return VoiceInput(data, null, data.size / (bundle?.conditioningDim ?: 1024) + bos)
+    }
 
     /**
      * Latent frames per mimi_decoder run (#15 "D"): consecutive batches no
@@ -286,8 +305,7 @@ open class PocketEngine @Inject constructor(
         // request for a voice whose files are missing speaks with this
         // default voice ([voiceToRender], #44); the installer's layout check
         // still asks for every offered voice of a current install.
-        val defaultKey = PocketVoiceCatalog.DEFAULT_VOICE_ID.substringAfterLast(':')
-        return File(voicesDir, "$defaultKey.wav").isFile
+        return PocketVoiceFiles.has(engineDir, defaultVoiceKey)
     }
 
     /**
@@ -295,7 +313,7 @@ open class PocketEngine @Inject constructor(
      * System TTS lists only these, so no client is offered a voice that
      * would come out as the default one.
      */
-    fun installedVoiceKeys(): Set<String> = PocketVoiceFiles.presentKeys(engineDir)
+    fun installedVoiceKeys(): Set<String> = PocketVoiceFiles.presentKeys(engineDir, offeredVoiceKeys)
 
     /** The voice key [voiceId] renders with: itself, or the default voice when its files are absent. */
     internal fun voiceToRender(voiceId: String): String =
@@ -321,7 +339,7 @@ open class PocketEngine @Inject constructor(
         if (env != null) return
         loadLock.withLock {
             if (env != null) return
-            if (!isInstalled()) throw EngineNotInstalledException(ENGINE_NAME)
+            if (!isInstalled()) throw EngineNotInstalledException(engineName)
             Log.i(TAG, "Loading Pocket TTS bundle from $engineDir …")
             val t0 = System.currentTimeMillis()
             // Resolve intra-op thread count: manual override takes priority,
@@ -353,7 +371,7 @@ open class PocketEngine @Inject constructor(
         // KokoroDirectEngine.doLoad.
         val ort = OrtEnvironment.getEnvironment()
         bundle = PocketBundle.load(File(engineDir, "bundle.json"))
-        tokenizer = PocketTokenizer.load(File(engineDir, "tokenizer.model"))
+        tokenizer = PocketTokenizer.load(File(engineDir, "tokenizer.model"), bundle!!.tokenizerNormalizeNfkc)
 
         // bos_before_voice.npy: shape [1,1,1024] float32. Stash the flat
         // 1024-d vector — we'll concat along the time axis when needed.
@@ -528,8 +546,8 @@ open class PocketEngine @Inject constructor(
             val bundle = bundle ?: return
             val tokenizer = tokenizer ?: return
             val voiceName = bundle.predefinedVoices.firstOrNull() ?: return
-            val voiceEmb = embeddingForVoice(voiceName)
-            val preprocessed = preprocessForPocket("Hi.", bundle)
+            val voiceEmb = voiceInput(voiceName)
+            val preprocessed = preprocessForPocket(warmupText, bundle)
             val tokens = tokenizer.encode(preprocessed)
             val phases = ArrayList<PhaseSpan>(2)
             val ar = startArSession(bundle, voiceEmb, tokens, preprocessed, phases = phases)
@@ -715,7 +733,7 @@ open class PocketEngine @Inject constructor(
         // (native SIGSEGV).
         synthLock.withLock { coroutineScope {
             // Under the lock: a first-use voice encodes through mimi_encoder.
-            val voiceEmb = embeddingForVoice(voiceName)
+            val voiceEmb = voiceInput(voiceName)
             seed?.let { random.setSeed(it) }
             noiseStd = pocketNoiseStd(expressiveness)
             Log.d(TAG, "request temperature=${Expressiveness.pocketTemperature(expressiveness)}" +
@@ -815,7 +833,7 @@ open class PocketEngine @Inject constructor(
     private suspend fun streamChunks(
         out: ProducerScope<SynthAudio>,
         bundle: PocketBundle,
-        voiceEmb: FloatArray,
+        voiceEmb: VoiceInput,
         miniChunks: List<String>,
         playbackRate: Float,
         pace: RequestPace,
@@ -1029,7 +1047,7 @@ open class PocketEngine @Inject constructor(
      */
     private suspend fun generateChunkLatents(
         bundle: PocketBundle,
-        voiceEmb: FloatArray,
+        voiceEmb: VoiceInput,
         miniChunk: String,
         chunkIdx: Int,
         /** Time spent running the voice prompt (0 when cached). */
@@ -1377,6 +1395,7 @@ open class PocketEngine @Inject constructor(
         pcm: FloatArray,
         srcSampleRate: Int,
     ): String = withContext(Dispatchers.Default) {
+        check(supportsVoiceCloning) { "This Pocket bundle supports official voices only" }
         require(displayName.isNotBlank()) { "Cloned voice display name must not be blank" }
         require(pcm.isNotEmpty()) { "Cloned voice PCM is empty" }
         ensureLoadedSuspending()
@@ -1396,7 +1415,7 @@ open class PocketEngine @Inject constructor(
             PocketClonedVoiceStore.write(clonedVoicesDir, voice)
             voiceEmbeddings[localId] = embedding
             Log.i(TAG, "Cloned voice '$displayName' as $localId ($numFrames frames)")
-            "${PocketVoiceCatalog.ENGINE}:$localId"
+            "$engineName:$localId"
         }
     }
 
@@ -1543,7 +1562,7 @@ open class PocketEngine @Inject constructor(
      */
     private fun startArSession(
         bundle: PocketBundle,
-        voiceEmbedding: FloatArray,
+        voiceInput: VoiceInput,
         tokens: IntArray,
         originalText: String,
         phases: MutableList<PhaseSpan>?,
@@ -1558,18 +1577,28 @@ open class PocketEngine @Inject constructor(
         // The voice prompt's state is cached by embedding identity (#15 "C").
         // A symbolic cache axis (#15 "F") is sized for the voice prompt plus
         // the largest normal chunk, so one cached prompt serves every chunk.
-        val promptRows = voiceEmbedding.size / bundle.conditioningDim + if (bundle.insertBosBeforeVoice) 1 else 0
+        val promptRows = voiceInput.rows
+        val voiceEmbedding = voiceInput.embedding
         val sizingTokens = maxOf(tokens.size, bundle.maxTokenPerChunk)
-        val cacheLen = flowCacheLenKnob ?: if (flowCacheDynamic) {
+        val cacheLen = if (voiceInput.prepared != null) null else flowCacheLenKnob ?: if (flowCacheDynamic) {
             PocketCacheShapes.flowLenFor(promptRows, sizingTokens, estimateMaxFrames(bundle, sizingTokens))
         } else {
             null
         }
         val manifest = cacheLen?.let { PocketCacheShapes.flowLm(bundle.flowLmStateManifest, it) } ?: bundle.flowLmStateManifest
         val cachedPrompt = voicePrompt
-            ?.takeIf { it.embedding === voiceEmbedding && it.cacheLen == cacheLen }?.frame
+            ?.takeIf { it.identity == voiceInput.identity && it.cacheLen == cacheLen }?.frame
         val carry = if (cachedPrompt != null) {
             PocketStateCarry(cachedPrompt.retain())
+        } else if (voiceInput.prepared != null) {
+            val states = initStates(manifest)
+            app.marmalade.tts.engine.pocket.PocketPreparedVoice.read(voiceInput.prepared, manifest) { spec, input, count ->
+                states.getValue(spec.inputName).loadPreparedBytes(input, count)
+            }
+            val frame = PocketStateCarry.bindSlots(ort, manifest, states)
+            voicePrompt?.frame?.release()
+            voicePrompt = VoicePrompt(voiceInput.identity, cacheLen, frame.retain())
+            PocketStateCarry(frame)
         } else {
             val init = flowInitStates.getOrPut(cacheLen ?: 0) { initStates(manifest) }
             PocketStateCarry(PocketStateCarry.bindSlots(ort, bundle.flowLmStateManifest, init))
@@ -1578,7 +1607,8 @@ open class PocketEngine @Inject constructor(
             // PHASE 1: voice conditioning.
             // text_embeddings = bos_before_voice ++ voice_embedding, shape [1, V+1, conditioningDim]
             val phase1Start = System.currentTimeMillis()
-            if (cachedPrompt == null) {
+            if (cachedPrompt == null && voiceInput.prepared == null) {
+                val voiceEmbedding = requireNotNull(voiceEmbedding)
                 val bos = bosBeforeVoice ?: error("bos_before_voice missing")
                 val voiceFrames = voiceEmbedding.size / bundle.conditioningDim
                 val totalFrames = voiceFrames + if (bundle.insertBosBeforeVoice) 1 else 0
@@ -1604,7 +1634,7 @@ open class PocketEngine @Inject constructor(
                 )
                 run {
                     voicePrompt?.frame?.release()
-                    voicePrompt = VoicePrompt(voiceEmbedding, cacheLen, carry.snapshot())
+                    voicePrompt = VoicePrompt(voiceInput.identity, cacheLen, carry.snapshot())
                 }
             }
             phases?.add(
@@ -1981,7 +2011,7 @@ open class PocketEngine @Inject constructor(
      * 8 spaces for <5-word inputs.
      */
     private fun preprocessForPocket(raw: String, bundle: PocketBundle): String {
-        var s = raw.trim()
+        var s = prepareLanguageText(raw).trim()
         if (s.isEmpty()) return s
         // P-AG — fold smart punctuation to ASCII BEFORE tokenizing. The
         // bundled SentencePiece vocab has exactly one apostrophe piece: a

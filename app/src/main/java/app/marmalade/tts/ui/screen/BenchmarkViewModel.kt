@@ -52,6 +52,7 @@ class BenchmarkViewModel @Inject constructor(
     private val kokoroGerman: KokoroGermanEngine,
     private val kittenDirect: KittenDirectEngine,
     private val pocket: PocketEngine,
+    private val pocketGerman: app.marmalade.tts.engine.PocketGermanEngine,
     private val vits: VitsDirectEngine,
     @ApplicationContext private val appContext: Context,
 ) : ViewModel() {
@@ -70,6 +71,7 @@ class BenchmarkViewModel @Inject constructor(
         KokoroGermanVoiceCatalog.ENGINE to (kokoroGerman to KokoroGermanVoiceCatalog.DEFAULT_VOICE_ID),
         KittenDirectVoiceCatalog.ENGINE to (kittenDirect to KittenDirectVoiceCatalog.DEFAULT_VOICE_ID),
         PocketVoiceCatalog.ENGINE to (pocket to PocketVoiceCatalog.DEFAULT_VOICE_ID),
+        app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE to (pocketGerman to app.marmalade.tts.data.PocketGermanVoiceCatalog.DEFAULT_VOICE_ID),
         VitsVoiceCatalog.ENGINE to (vits to VitsVoiceCatalog.DEFAULT_VOICE_ID),
     )
 

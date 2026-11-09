@@ -84,6 +84,7 @@ data class PocketBundle(
      * (`state_0`..`state_55` / `out_state_0`..`out_state_55`).
      */
     val mimiStateManifest: List<StateSpec>,
+    val tokenizerNormalizeNfkc: Boolean = true,
 ) {
     /**
      * Filenames for the 5 ONNX graphs the engine loads. Naming is variant-
@@ -150,6 +151,7 @@ data class PocketBundle(
             }
             return PocketBundle(
                 sampleRate = json.getInt("sample_rate"),
+                tokenizerNormalizeNfkc = json.optString("tokenizer_normalization", "nfkc") != "identity",
                 frameRate = json.getDouble("frame_rate"),
                 samplesPerFrame = json.getInt("samples_per_frame"),
                 latentDim = json.getInt("latent_dim"),

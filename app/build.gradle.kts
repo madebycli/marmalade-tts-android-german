@@ -40,7 +40,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "app.marmalade.tts"
+        applicationId = "app.marmalade.tts.de"
         minSdk = 28
         targetSdk = 36
         // G4 versioning (internal release notes):
@@ -163,7 +163,11 @@ android {
             // Emulator testing: debug builds also carry x86_64 (espeak-ng
             // builds from source, ORT ships x86_64 in its AAR). Release
             // keeps the arm-only filter from defaultConfig.
-            ndk { abiFilters += "x86_64" }
+            if (project.hasProperty("germanArm64")) {
+                ndk { abiFilters.clear(); abiFilters += "arm64-v8a" }
+            } else {
+                ndk { abiFilters += "x86_64" }
+            }
         }
         release {
             isMinifyEnabled = true
@@ -207,7 +211,7 @@ android {
     androidResources {
         // Shipped UI languages (keep in sync with res/xml/locales_config.xml).
         // Also strips unused locales from library resources.
-        localeFilters += listOf("en", "es", "fr", "hi", "it", "ja", "pt-rBR", "zh-rCN")
+        localeFilters += listOf("en", "de", "es", "fr", "hi", "it", "ja", "pt-rBR", "zh-rCN")
     }
     packaging {
         resources {

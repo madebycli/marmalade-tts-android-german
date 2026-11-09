@@ -54,6 +54,7 @@ class CheckVoiceDataActivity : ComponentActivity() {
     @Inject lateinit var kokoroDirect: KokoroDirectEngine
     @Inject lateinit var kokoroGerman: KokoroGermanEngine
     @Inject lateinit var pocket: PocketEngine
+    @Inject lateinit var pocketGerman: app.marmalade.tts.engine.PocketGermanEngine
     @Inject lateinit var vits: VitsDirectEngine
     @Inject lateinit var cloudApi: CloudApiEngine
 
@@ -69,7 +70,9 @@ class CheckVoiceDataActivity : ComponentActivity() {
         // per CHECK_TTS_DATA dispatch, not subscribing.
         val voices = runBlocking { voiceDao.getAll().first() }
         val (available, unavailable) =
-            classifyVoices(voices, ::isEngineInstalled, pocket::installedVoiceKeys) { vits.installedPackIds() }
+            classifyVoices(voices.filter { it.engine != app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE ||
+                app.marmalade.tts.engine.pocket.PocketVoiceFiles.isOffered(it.id, pocketGerman.installedVoiceKeys()) },
+                ::isEngineInstalled, pocket::installedVoiceKeys) { vits.installedPackIds() }
 
         val data = Intent().apply {
             putStringArrayListExtra(
@@ -102,6 +105,7 @@ class CheckVoiceDataActivity : ComponentActivity() {
         KokoroGermanVoiceCatalog.ENGINE -> kokoroGerman.isInstalled()
         KittenDirectVoiceCatalog.ENGINE -> kittenDirect.isInstalled()
         PocketVoiceCatalog.ENGINE -> pocket.isInstalled()
+        app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE -> pocketGerman.isInstalled()
         CloudApiVoiceCatalog.ENGINE -> cloudApi.isInstalled()
         else -> false
     }

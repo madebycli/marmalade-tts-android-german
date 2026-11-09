@@ -79,6 +79,7 @@ fun EngineSpecColumn(
         modifier = modifier.width(118.dp),
         verticalArrangement = Arrangement.Top,
     ) {
+        if (engine.hasMeasuredRatings) {
         SpecRow(label = stringResource(R.string.engine_spec_speed), labelSpoken = false) {
             // Meter only — the tier word ("Fastest"/"Fast"/"Moderate"/"Heavy") is dropped
             // from the card and carried as the meter's contentDescription, so
@@ -94,6 +95,7 @@ fun EngineSpecColumn(
                 quality = engine.quality,
                 modifier = Modifier.padding(top = 2.dp),
             )
+        }
         }
         SpecRow(label = stringResource(R.string.engine_spec_languages)) {
             EngineLanguagesValue(

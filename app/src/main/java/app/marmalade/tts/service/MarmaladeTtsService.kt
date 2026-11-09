@@ -1113,7 +1113,11 @@ class MarmaladeTtsService : TextToSpeechService() {
         val all = voiceSnapshot.ifEmpty {
             runBlocking { voiceDao.getAll().first() }.also { voiceSnapshot = it }
         }
-        return advertisableVoices(all, ::isEngineInstalled, ::installedPocketVoices) { vits.installedPackIds() }
+        val germanKeys = (engines.find(app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE) as? PocketEngine)
+            ?.installedVoiceKeys().orEmpty()
+        val withGermanFiles = all.filter { it.engine != app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE ||
+            PocketVoiceFiles.isOffered(it.id, germanKeys) }
+        return advertisableVoices(withGermanFiles, ::isEngineInstalled, ::installedPocketVoices) { vits.installedPackIds() }
     }
 
     /** Pocket's built-in voices on disk; see [advertisableVoices]. */

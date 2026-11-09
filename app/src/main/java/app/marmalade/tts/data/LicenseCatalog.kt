@@ -134,6 +134,10 @@ object LicenseCatalog {
             "https://creativecommons.org/licenses/by/4.0/legalcode.txt",
         ),
         License(
+            "CC-BY-NC-4.0", "CC-BY-NC-4.0.txt",
+            "https://creativecommons.org/licenses/by-nc/4.0/legalcode.txt",
+        ),
+        License(
             "CC-BY-SA-4.0", "CC-BY-SA-4.0.txt",
             "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt",
         ),
@@ -427,6 +431,21 @@ object LicenseCatalog {
                 "and the dataset permit commercial use; the trainer imposes " +
                 "\"no further license or restrictions\". Full verbatim terms " +
                 "in the bundled text.",
+        ),
+        Component(
+            key = "pocket-de-weights", name = "Pocket TTS German — weights and 27 voice states",
+            role = "German speech model", shipsIn = "Optional engine download",
+            licenseId = "CC-BY-4.0",
+            copyright = listOf("Pocket TTS by Kyutai; ONNX conversion by KevinAHM"),
+            textAsset = "pocket-de.txt",
+            note = "Six-layer German checkpoint; all official catalog voices. Sources and per-voice licences in the notice. Cosette and Jean are non-commercial only.",
+        ),
+        Component(
+            key = "pocket-de-voices-nc", name = "German Pocket voices Cosette and Jean",
+            role = "Official voice states from Expresso and EARS recordings",
+            shipsIn = "Optional engine download", licenseId = "CC-BY-NC-4.0",
+            copyright = listOf("Expresso dataset contributors (Cosette)", "EARS, University of Hamburg (Jean)"),
+            note = "Non-commercial use only. Other voices have their individual licences in the German bundle notice.",
         ),
         Component(
             key = "pocket-weights",

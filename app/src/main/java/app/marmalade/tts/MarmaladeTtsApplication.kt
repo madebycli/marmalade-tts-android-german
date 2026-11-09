@@ -181,6 +181,7 @@ class MarmaladeTtsApplication : Application() {
                 dao.upsertAll(KokoroGermanVoiceCatalog.voices)
                 dao.upsertAll(KittenDirectVoiceCatalog.voices)
                 dao.upsertAll(PocketVoiceCatalog.voices)
+                dao.upsertAll(app.marmalade.tts.data.PocketGermanVoiceCatalog.voices)
                 dao.upsertAll(PocketDevVoiceCatalog.voices)
                 dao.upsertAll(VitsVoiceCatalog.voices)
                 // Built-in effects. REPLACE-on-conflict refreshes them on each
@@ -434,6 +435,6 @@ class MarmaladeTtsApplication : Application() {
          *    and system-TTS clients keep working; an installed pack's row is
          *    this same catalog row, so it is renamed too.
          */
-        const val CATALOG_VERSION: Int = 42
+        const val CATALOG_VERSION: Int = 43
     }
 }

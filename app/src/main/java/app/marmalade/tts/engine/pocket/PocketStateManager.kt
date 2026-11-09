@@ -118,6 +118,23 @@ class PocketStateSlot(
      * MUST be called before [OrtSession.Result.close] — the output buffer
      * views from [out] become invalid after close.
      */
+    /** Bundle-verified official voice state; little-endian raw tensors, same shape as this slot. */
+    internal fun loadPreparedBytes(input: java.io.InputStream, count: Int) {
+        require(java.nio.ByteOrder.nativeOrder() == java.nio.ByteOrder.LITTLE_ENDIAN)
+        require(count == elementCount(shape) * elementBytes)
+        buffer.clear()
+        val chunk = ByteArray(minOf(count, 64 * 1024))
+        var remaining = count
+        while (remaining > 0) {
+            val n = input.read(chunk, 0, minOf(chunk.size, remaining))
+            if (n < 0) throw java.io.EOFException("Truncated Pocket voice state")
+            if (n == 0) continue
+            buffer.put(chunk, 0, n)
+            remaining -= n
+        }
+        buffer.flip()
+    }
+
     fun updateFromOutput(out: OnnxTensor) {
         val outShape = out.info.shape
         val outElements = elementCount(outShape)

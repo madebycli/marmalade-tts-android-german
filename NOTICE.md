@@ -129,3 +129,7 @@ folder.
 
 Full per-component notices, file lists, and upstream URLs are in
 [`LICENSES/`](LICENSES/).
+
+## German Pocket fork download
+
+The separate `pocket-tts-de` download contains Kyutai German weights and all27official German voice states (CC-BY-4.0); voices retain their individual notices, including CC-BY-NC-4.0 for Cosette and Jean. See [LICENSES/pocket-tts-de.md](LICENSES/pocket-tts-de.md). No German model or voice data ships in the APK. Source MIT; APK GPL-3.0-or-later remains unchanged.

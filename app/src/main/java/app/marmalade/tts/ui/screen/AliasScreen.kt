@@ -891,14 +891,20 @@ private fun AliasEditorSheet(
                         // A null column is English on Kitten, not
                         // auto-detect: detection is opt-in there.
                         kitten -> state.phonemizationLanguage ?: "en-us"
+                        state.engine == app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE -> "de"
                         else -> "en-us"
                     },
                     onPick = onPhonemizationLanguageChange,
                     enabled = kokoro || kitten,
-                    entries = if (kokoro) PHONEMIZATION_LANGUAGES else KITTEN_PHONEMIZATION_LANGUAGES,
+                    entries = when {
+                        state.engine == app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE -> listOf("de" to R.string.pocket_de_language_name)
+                        kokoro -> PHONEMIZATION_LANGUAGES
+                        else -> KITTEN_PHONEMIZATION_LANGUAGES
+                    },
                     note = when {
                         kokoro -> null
                         kitten -> R.string.alias_lang_engine_accented
+                        state.engine == app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE -> R.string.pocket_de_fixed_language
                         else -> R.string.alias_lang_engine_english_only
                     },
                 )
@@ -1283,7 +1289,8 @@ private fun PhonemizationLanguageDropdown(
     var expanded by remember { mutableStateOf(false) }
     Box {
         OutlinedTextField(
-            value = phonemizationLanguageDisplayName(selected),
+            value = entries.firstOrNull { it.first == (selected ?: LangDetector.AUTO) }?.second
+                ?.let { stringResource(it) } ?: phonemizationLanguageDisplayName(selected),
             onValueChange = { /* read-only */ },
             readOnly = true,
             enabled = enabled,
@@ -1331,6 +1338,7 @@ private val PHONEMIZATION_ENGINES: Set<String> = setOf(
     KittenDirectVoiceCatalog.ENGINE,
     PocketVoiceCatalog.ENGINE,
     PocketDevVoiceCatalog.ENGINE,
+    app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE,
 )
 
 /**

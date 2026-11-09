@@ -61,6 +61,7 @@ data class InstalledVoiceAssets(
     val engines: Set<String> = emptySet(),
     val packs: Set<String> = emptySet(),
     val pocketVoices: Set<String> = PocketVoiceCatalog.voices.mapTo(HashSet()) { it.id.substringAfter(':') },
+    val germanPocketVoices: Set<String> = emptySet(),
 )
 
 /**
@@ -80,6 +81,7 @@ data class InstalledVoiceAssets(
 fun isVoiceAvailable(voice: VoiceMeta, assets: InstalledVoiceAssets): Boolean {
     if (voice.engine !in assets.engines) return false
     if (voice.engine == PocketVoiceCatalog.ENGINE) return PocketVoiceFiles.isOffered(voice.id, assets.pocketVoices)
+    if (voice.engine == PocketGermanVoiceCatalog.ENGINE) return PocketVoiceFiles.isOffered(voice.id, assets.germanPocketVoices)
     if (!isPackBasedEngine(voice.engine)) return true
     val packId = VitsVoiceCatalog.packIdOf(voice.id) ?: return false
     return packId in assets.packs
@@ -178,5 +180,6 @@ suspend fun probeInstalledVoiceAssets(
     if (anyCloudKeySet) engines += CloudApiVoiceCatalog.ENGINE
     val pocketVoices =
         if (PocketVoiceCatalog.ENGINE in engines) installer.pocketVoiceKeys() else emptySet()
-    return InstalledVoiceAssets(engines = engines, packs = packs, pocketVoices = pocketVoices)
+    val germanPocketVoices = if (PocketGermanVoiceCatalog.ENGINE in engines) installer.germanPocketVoiceKeys() else emptySet()
+    return InstalledVoiceAssets(engines = engines, packs = packs, pocketVoices = pocketVoices, germanPocketVoices = germanPocketVoices)
 }

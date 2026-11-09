@@ -42,6 +42,7 @@ class PocketTokenizer private constructor(
     private val byteFallbackId: IntArray,
     /** Longest piece by UTF-16 char count — bounds the Viterbi inner loop. */
     private val maxPieceChars: Int,
+    private val normalizeNfkc: Boolean,
 ) {
 
     /** Total vocab size. Useful for sanity checks against the text_conditioner embedding. */
@@ -61,7 +62,7 @@ class PocketTokenizer private constructor(
      */
     fun encode(text: String): IntArray {
         if (text.isEmpty()) return IntArray(0)
-        val normalized = Normalizer.normalize(text, Normalizer.Form.NFKC)
+        val normalized = if (normalizeNfkc) Normalizer.normalize(text, Normalizer.Form.NFKC) else text
         // SentencePiece treats the input as if prefixed by a word
         // boundary; explicitly prepend U+2581 and swap spaces for it.
         val withBoundaries = buildString(normalized.length + 1) {
@@ -114,10 +115,12 @@ class PocketTokenizer private constructor(
             // encodes to UTF-8. Each byte token is recovered at backtrack
             // time by re-encoding input[parent..i].
             val newScore = score[i] + bytePenalty
-            if (newScore > score[i + 1]) {
-                score[i + 1] = newScore
-                parent[i + 1] = i
-                chosen[i + 1] = -1 // sentinel: byte fallback for input[i..i+1]
+            // Consume a Unicode code point, never half an emoji/supplementary character.
+            val next = i + Character.charCount(input.codePointAt(i))
+            if (newScore > score[next]) {
+                score[next] = newScore
+                parent[next] = i
+                chosen[next] = -1
             }
         }
 
@@ -161,7 +164,7 @@ class PocketTokenizer private constructor(
          * model spec metadata (TrainerSpec, NormalizerSpec) isn't needed
          * because we hardcode NFKC and U+2581 as the boundary char.
          */
-        fun load(file: File): PocketTokenizer {
+        fun load(file: File, normalizeNfkc: Boolean = true): PocketTokenizer {
             val bytes = file.readBytes()
             val pieces = ArrayList<String>(16384)
             val scores = ArrayList<Float>(16384)
@@ -244,6 +247,7 @@ class PocketTokenizer private constructor(
                 unkId = unkId,
                 byteFallbackId = byteFallbackId,
                 maxPieceChars = maxLen,
+                normalizeNfkc = normalizeNfkc,
             )
         }
     }

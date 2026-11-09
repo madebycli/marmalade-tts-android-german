@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_pocket_de_desc">公式の全27音声を備えたドイツ語Pocketモデル。試験版です。実機での速度と音質は未評価です。一部の音声は非商用利用のみです。</string>
+    <string name="engine_pocket_de_tagline">Pocket公式27音声によるドイツ語読み上げ。</string>
+    <string name="engine_pocket_de_license">モデル：CC BY 4.0、コード：MIT、音声：CC0、CC BY 4.0、CC BY-NC 4.0。CosetteとJeanは非商用利用のみ。</string>
+    <string name="pocket_de_fixed_language">このPocketモデルはドイツ語を読み上げます。</string>
+    <string name="pocket_de_language_name">ドイツ語</string>
+</resources>

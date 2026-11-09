@@ -183,3 +183,7 @@ Full detail, including the MIT notice for the weights:
 
 If you believe your work should be credited here and isn't, please open
 an issue — it's an oversight, not an omission.
+
+## German Pocket download
+
+Pocket TTS by Kyutai; ONNX export by KevinAHM. All27official German voice states are included. Per-voice credits and licences: [German bundle notice](LICENSES/pocket-tts-de.md).

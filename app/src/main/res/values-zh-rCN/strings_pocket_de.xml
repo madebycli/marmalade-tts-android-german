@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_pocket_de_desc">德语 Pocket 模型，包含全部 27 个官方声音。实验版本；手机上的速度和音质尚未评估。部分声音仅限非商业用途。</string>
+    <string name="engine_pocket_de_tagline">使用 Pocket 官方 27 个声音朗读德语。</string>
+    <string name="engine_pocket_de_license">模型 CC BY 4.0；代码 MIT；声音 CC0、CC BY 4.0 和 CC BY-NC 4.0。Cosette 和 Jean 仅限非商业用途。</string>
+    <string name="pocket_de_fixed_language">此 Pocket 模型朗读德语。</string>
+    <string name="pocket_de_language_name">德语</string>
+</resources>

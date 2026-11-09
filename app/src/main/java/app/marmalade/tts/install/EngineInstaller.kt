@@ -1202,6 +1202,11 @@ open class EngineInstaller @Inject constructor(
      * ([PocketVoiceFiles.presentKeys]). An older download that still verifies
      * (Outdated) carries fewer voices than the catalog offers (#45).
      */
+    open suspend fun germanPocketVoiceKeys(): Set<String> = withContext(Dispatchers.IO) {
+        PocketVoiceFiles.presentKeys(engineDirFor(app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE),
+            app.marmalade.tts.data.PocketGermanVoiceCatalog.KEYS)
+    }
+
     open suspend fun pocketVoiceKeys(): Set<String> = withContext(Dispatchers.IO) {
         PocketVoiceFiles.presentKeys(engineDirFor(PocketVoiceCatalog.ENGINE))
     }
@@ -1536,6 +1541,7 @@ open class EngineInstaller @Inject constructor(
         if (outdated != null) return outdated
 
         return when (descriptor.name) {
+            "pocket-tts-de" -> verifyPocketLayout(dir, app.marmalade.tts.data.PocketGermanVoiceCatalog.voices, preparedAllowed = true)
             "pocket-tts-en-v2026_04"   -> verifyPocketLayout(dir, PocketVoiceCatalog.voices)
             "pocket-tts-en-v2026_04-dev" -> verifyPocketLayout(dir, PocketDevVoiceCatalog.voices)
             "kitten-direct-v0_8"       -> verifyKittenDirectLayout(dir)
@@ -1705,7 +1711,7 @@ open class EngineInstaller @Inject constructor(
      * per predefined voice. Voice cloning lands files under
      * cloned_voices/ later; their absence at install time is fine.
      */
-    private fun verifyPocketLayout(dir: File, offered: List<VoiceMeta>): InstallState {
+    private fun verifyPocketLayout(dir: File, offered: List<VoiceMeta>, preparedAllowed: Boolean = false): InstallState {
         // Always-present, variant-independent files. The 5 ONNX filenames are
         // variant-specific (declared in bundle.json's `onnx_files` block) and
         // checked separately below.
@@ -1742,7 +1748,7 @@ open class EngineInstaller @Inject constructor(
         if (mainOnnx.length() < MIN_MODEL_BYTES) return InstallState.Corrupt
 
         val voicesDir = File(dir, "voices")
-        if (!voicesDir.isDirectory) return InstallState.Corrupt
+        if (!preparedAllowed && !voicesDir.isDirectory) return InstallState.Corrupt
         // Every voice the engine's catalog offers needs its WAV. A bundle may
         // hold more (v21's `marius`, no longer offered, issue #19) and the
         // check doesn't care. The upstream `cosette` (Expresso) and `jean`
@@ -1750,7 +1756,11 @@ open class EngineInstaller @Inject constructor(
         val expectedVoices = offered.map { it.id.substringAfter(':') }
         for (name in expectedVoices) {
             val wav = File(voicesDir, "$name.wav")
-            if (!wav.isFile || wav.length() == 0L) return InstallState.Corrupt
+            val prepared = File(dir, "voice_states/$name.prompt.gz")
+            if (preparedAllowed && prepared.isFile) {
+                if (runCatching { app.marmalade.tts.engine.pocket.PocketPreparedVoice.validateHeader(prepared, bundleSpec.flowLmStateManifest) }.isFailure)
+                    return InstallState.Corrupt
+            } else if (!wav.isFile || wav.length() == 0L) return InstallState.Corrupt
         }
         return InstallState.Installed
     }

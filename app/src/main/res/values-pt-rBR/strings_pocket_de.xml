@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_pocket_de_desc">Modelo Pocket alemão com todas as 27 vozes oficiais. Experimental; velocidade e qualidade no celular ainda não avaliadas. Algumas vozes são apenas para uso não comercial.</string>
+    <string name="engine_pocket_de_tagline">Fala em alemão com 27 vozes oficiais Pocket.</string>
+    <string name="engine_pocket_de_license">Modelo CC BY 4.0; código MIT; vozes CC0, CC BY 4.0 e CC BY-NC 4.0. Cosette e Jean: apenas uso não comercial.</string>
+    <string name="pocket_de_fixed_language">Este modelo Pocket fala alemão.</string>
+    <string name="pocket_de_language_name">Alemão</string>
+</resources>

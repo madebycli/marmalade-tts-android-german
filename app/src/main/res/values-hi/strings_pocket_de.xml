@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_pocket_de_desc">सभी 27 आधिकारिक आवाज़ों वाला जर्मन Pocket मॉडल। प्रायोगिक; फ़ोन पर गति और आवाज़ की गुणवत्ता का अभी मूल्यांकन नहीं हुआ है। कुछ आवाज़ें केवल गैर-व्यावसायिक उपयोग के लिए हैं।</string>
+    <string name="engine_pocket_de_tagline">27 आधिकारिक Pocket आवाज़ों के साथ जर्मन वाणी।</string>
+    <string name="engine_pocket_de_license">मॉडल CC BY 4.0; कोड MIT; आवाज़ें CC0, CC BY 4.0 और CC BY-NC 4.0। Cosette और Jean: केवल गैर-व्यावसायिक उपयोग।</string>
+    <string name="pocket_de_fixed_language">यह Pocket मॉडल जर्मन बोलता है।</string>
+    <string name="pocket_de_language_name">जर्मन</string>
+</resources>

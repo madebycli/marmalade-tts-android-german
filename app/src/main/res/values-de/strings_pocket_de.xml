@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_pocket_de_desc">Deutscher Pocket-Checkpoint mit allen 27 offiziellen Stimmen. Testversion; Tempo und Stimmqualität auf dem Handy sind noch nicht bewertet. Einige Stimmen sind nur für nichtkommerzielle Nutzung freigegeben.</string>
+    <string name="engine_pocket_de_tagline">Deutsche Sprachausgabe mit 27 offiziellen Pocket-Stimmen.</string>
+    <string name="engine_pocket_de_license">Modell CC BY 4.0; Code MIT; Stimmen CC0, CC BY 4.0 und CC BY-NC 4.0. Cosette und Jean: nur nichtkommerziell.</string>
+    <string name="pocket_de_fixed_language">Dieser Pocket-Checkpoint spricht Deutsch.</string>
+    <string name="app_name">Marmalade TTS Deutsch</string>
+    <string name="pocket_de_language_name">Deutsch</string>
+</resources>

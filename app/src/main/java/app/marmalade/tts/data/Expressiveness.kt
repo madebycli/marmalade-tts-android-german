@@ -33,7 +33,8 @@ object Expressiveness {
 
     /** Engines whose sampler reads the setting. */
     fun appliesTo(engine: String): Boolean =
-        engine == PocketVoiceCatalog.ENGINE || engine == PocketDevVoiceCatalog.ENGINE
+        engine == PocketVoiceCatalog.ENGINE || engine == PocketDevVoiceCatalog.ENGINE ||
+            engine == PocketGermanVoiceCatalog.ENGINE
 
     /** The temperature Pocket samples at for [expressiveness] (null = default). */
     fun pocketTemperature(expressiveness: Float?): Float =

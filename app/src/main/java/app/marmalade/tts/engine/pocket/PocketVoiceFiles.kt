@@ -20,12 +20,11 @@ internal object PocketVoiceFiles {
     val DEFAULT_KEY: String = PocketVoiceCatalog.DEFAULT_VOICE_ID.substringAfterLast(':')
 
     fun has(engineDir: File, key: String): Boolean =
-        nonEmpty(File(engineDir, "voices/$key.wav")) || nonEmpty(File(engineDir, "voice_cache/$key.emb"))
+        nonEmpty(File(engineDir, "voices/$key.wav")) || nonEmpty(File(engineDir, "voice_cache/$key.emb")) || nonEmpty(File(engineDir, "voice_states/$key.prompt.gz"))
 
     /** The catalog's offered voices present in [engineDir], by key, in catalog order. */
-    fun presentKeys(engineDir: File): Set<String> =
-        PocketVoiceCatalog.voices
-            .map { it.id.substringAfter(':') }
+    fun presentKeys(engineDir: File, offeredKeys: List<String> = PocketVoiceCatalog.voices.map { it.id.substringAfter(':') }): Set<String> =
+        offeredKeys
             .filterTo(LinkedHashSet()) { has(engineDir, it) }
 
     /**
@@ -37,7 +36,8 @@ internal object PocketVoiceFiles {
     fun isOffered(voiceId: String, presentKeys: Set<String>): Boolean =
         voiceId !in CATALOG_IDS || voiceId.substringAfter(':') in presentKeys
 
-    private val CATALOG_IDS: Set<String> = PocketVoiceCatalog.voices.mapTo(HashSet()) { it.id }
+    private val CATALOG_IDS: Set<String> = (PocketVoiceCatalog.voices +
+        app.marmalade.tts.data.PocketGermanVoiceCatalog.voices).mapTo(HashSet()) { it.id }
 
     private fun nonEmpty(f: File): Boolean = f.isFile && f.length() > 0L
 }
@@ -50,13 +50,15 @@ internal object PocketVoiceFiles {
  */
 internal class PocketVoiceFallback(
     private val isPresent: (String) -> Boolean,
+    private val defaultKey: () -> String = { PocketVoiceFiles.DEFAULT_KEY },
     private val onFallback: (requested: String, used: String) -> Unit,
 ) {
     private val reported: MutableSet<String> = ConcurrentHashMap.newKeySet()
 
     fun keyFor(requested: String): String {
         if (requested.startsWith(PocketEngine.CLONED_VOICE_PREFIX) || isPresent(requested)) return requested
-        if (reported.add(requested)) onFallback(requested, PocketVoiceFiles.DEFAULT_KEY)
-        return PocketVoiceFiles.DEFAULT_KEY
+        val used = defaultKey()
+        if (reported.add(requested)) onFallback(requested, used)
+        return used
     }
 }
