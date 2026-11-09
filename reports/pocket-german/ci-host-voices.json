@@ -1,0 +1,198 @@
+{
+  "host_only": true,
+  "device_tested": false,
+  "runtime": "onnxruntime 1.23.2 CPU, Python reference, one thread",
+  "load_ms": 541.1,
+  "max_rss_kib": 826528,
+  "results": [
+    {
+      "voice": "anna",
+      "audio_seconds": 2.56,
+      "rms": 0.0938,
+      "first_chunk_ms": 168.6,
+      "rtf": 0.496
+    },
+    {
+      "voice": "alba",
+      "audio_seconds": 2.64,
+      "rms": 0.0957,
+      "first_chunk_ms": 111.9,
+      "rtf": 0.46
+    },
+    {
+      "voice": "azelma",
+      "audio_seconds": 2.88,
+      "rms": 0.104,
+      "first_chunk_ms": 113.0,
+      "rtf": 0.462
+    },
+    {
+      "voice": "bill_boerst",
+      "audio_seconds": 2.88,
+      "rms": 0.0441,
+      "first_chunk_ms": 111.5,
+      "rtf": 0.444
+    },
+    {
+      "voice": "caro_davy",
+      "audio_seconds": 3.04,
+      "rms": 0.0563,
+      "first_chunk_ms": 105.3,
+      "rtf": 0.424
+    },
+    {
+      "voice": "charles",
+      "audio_seconds": 2.8,
+      "rms": 0.0793,
+      "first_chunk_ms": 106.8,
+      "rtf": 0.44
+    },
+    {
+      "voice": "cosette",
+      "audio_seconds": 2.8,
+      "rms": 0.0291,
+      "first_chunk_ms": 109.2,
+      "rtf": 0.458
+    },
+    {
+      "voice": "daan",
+      "audio_seconds": 2.72,
+      "rms": 0.0545,
+      "first_chunk_ms": 110.0,
+      "rtf": 0.429
+    },
+    {
+      "voice": "eponine",
+      "audio_seconds": 2.8,
+      "rms": 0.0973,
+      "first_chunk_ms": 112.6,
+      "rtf": 0.459
+    },
+    {
+      "voice": "estelle",
+      "audio_seconds": 2.4,
+      "rms": 0.0912,
+      "first_chunk_ms": 111.6,
+      "rtf": 0.479
+    },
+    {
+      "voice": "eve",
+      "audio_seconds": 2.4,
+      "rms": 0.0875,
+      "first_chunk_ms": 107.6,
+      "rtf": 0.441
+    },
+    {
+      "voice": "fantine",
+      "audio_seconds": 2.4,
+      "rms": 0.112,
+      "first_chunk_ms": 109.2,
+      "rtf": 0.455
+    },
+    {
+      "voice": "george",
+      "audio_seconds": 2.4,
+      "rms": 0.0773,
+      "first_chunk_ms": 110.5,
+      "rtf": 0.457
+    },
+    {
+      "voice": "giovanni",
+      "audio_seconds": 2.88,
+      "rms": 0.043,
+      "first_chunk_ms": 110.8,
+      "rtf": 0.443
+    },
+    {
+      "voice": "jane",
+      "audio_seconds": 2.72,
+      "rms": 0.0883,
+      "first_chunk_ms": 111.3,
+      "rtf": 0.455
+    },
+    {
+      "voice": "javert",
+      "audio_seconds": 3.68,
+      "rms": 0.0389,
+      "first_chunk_ms": 106.3,
+      "rtf": 0.44
+    },
+    {
+      "voice": "jean",
+      "audio_seconds": 3.04,
+      "rms": 0.0921,
+      "first_chunk_ms": 109.3,
+      "rtf": 0.447
+    },
+    {
+      "voice": "juergen",
+      "audio_seconds": 2.0,
+      "rms": 0.0419,
+      "first_chunk_ms": 107.5,
+      "rtf": 0.446
+    },
+    {
+      "voice": "lola",
+      "audio_seconds": 3.2,
+      "rms": 0.0755,
+      "first_chunk_ms": 106.3,
+      "rtf": 0.433
+    },
+    {
+      "voice": "marius",
+      "audio_seconds": 2.08,
+      "rms": 0.0169,
+      "first_chunk_ms": 107.9,
+      "rtf": 0.448
+    },
+    {
+      "voice": "mary",
+      "audio_seconds": 2.56,
+      "rms": 0.1063,
+      "first_chunk_ms": 108.6,
+      "rtf": 0.443
+    },
+    {
+      "voice": "michael",
+      "audio_seconds": 2.4,
+      "rms": 0.073,
+      "first_chunk_ms": 109.8,
+      "rtf": 0.458
+    },
+    {
+      "voice": "paul",
+      "audio_seconds": 2.56,
+      "rms": 0.1048,
+      "first_chunk_ms": 109.0,
+      "rtf": 0.45
+    },
+    {
+      "voice": "peter_yearsley",
+      "audio_seconds": 2.4,
+      "rms": 0.0289,
+      "first_chunk_ms": 101.0,
+      "rtf": 0.418
+    },
+    {
+      "voice": "rafael",
+      "audio_seconds": 2.0,
+      "rms": 0.04,
+      "first_chunk_ms": 109.8,
+      "rtf": 0.464
+    },
+    {
+      "voice": "stuart_bell",
+      "audio_seconds": 3.28,
+      "rms": 0.0156,
+      "first_chunk_ms": 106.3,
+      "rtf": 0.435
+    },
+    {
+      "voice": "vera",
+      "audio_seconds": 2.64,
+      "rms": 0.089,
+      "first_chunk_ms": 110.4,
+      "rtf": 0.461
+    }
+  ]
+}

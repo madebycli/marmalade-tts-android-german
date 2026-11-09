@@ -5,15 +5,15 @@ Keine Änderungen, Issues, Kommentare oder PRs wurden an Upstream gesendet.
 
 ## Installation und erster Test
 
-Die Test-APK wird unter den [Releases dieses Forks](https://github.com/madebycli/marmalade-tts-android-german/releases) bereitgestellt.
+Die fertige [Test-APK auf GitHub](https://github.com/madebycli/marmalade-tts-android-german/releases/tag/pocket-de-test-11b342dc) ist aus Quellstand `11b342dc` gebaut.
 Sie installiert sich als **Marmalade TTS Deutsch / German**, Paket
 `app.marmalade.tts.de.debug`, neben der Original-App.
 
 1. APK installieren und in der bestehenden Einrichtung **Pocket TTS German** wählen;
    alternativ später unter **Engines** installieren.
 2. Das deutsche Modell mit **allen 27 offiziellen Stimmen** dort herunterladen.
-   Der separate Download ist ca.246MB, installiert ca.368MB. Für Download und
-   Entpacken ungefähr1GB freien Speicher vorsehen. Die deutschen Modelle und
+   Der separate Download ist ca. 246 MB, installiert ca. 368 MB. Für Download und
+   Entpacken ungefähr 1 GB freien Speicher vorsehen. Die deutschen Modelle und
    Stimmendateien sind **nicht in der APK enthalten**. Der kleine ursprüngliche
    Kitten-Startmotor bleibt wie bei Upstream Bestandteil der App.
 3. Unter den Stimmen beispielsweise **Anna**, Azelma, Eponine, Fantine, Jane,
@@ -50,7 +50,7 @@ eine Testsignatur; Aktualisierbarkeit mit späteren CI-Builds ist nicht garantie
 - Keine erfundenen Tempo-/Klangbewertungen: die Bewertungsanzeigen für diesen
   Testmotor sind ausgeblendet, bis Messungen und Hörtests auf dem Telefon vorliegen.
 
-Alle27: Alba, Anna, Azelma, Bill Boerst, Caro Davy, Charles, Cosette, Daan,
+Alle 27: Alba, Anna, Azelma, Bill Boerst, Caro Davy, Charles, Cosette, Daan,
 Eponine, Estelle, Eve, Fantine, George, Giovanni, Jane, Javert, Jean, Jürgen,
 Lola, Marius, Mary, Michael, Paul, Peter Yearsley, Rafael, Stuart Bell, Vera.
 Die Referenzen stammen aus verschiedenen Sprachen; das deutsche Modell erzeugt
@@ -68,7 +68,7 @@ Cosette/Expresso und Jean/EARS: **CC-BY-NC-4.0**, nur nichtkommerziell.
 Diese Einschränkungen stehen auch in der App und im Download.
 
 Der öffentlich verfügbare offizielle Checkpoint ohne Stimmenklonen genügt für
-alle27offiziellen Stimmen. Die deutsche Engine lehnt den ohnehin nicht als UI
+alle 27 offiziellen Stimmen. Die deutsche Engine lehnt den ohnehin nicht als UI
 angebotenen Klon-Aufruf ab; die englische Implementierung bleibt bestehen.
 Kein HF-Token oder eigenes Sprachsample erforderlich. Eine neue Aufnahme wurde
 nicht angefordert, nachdem der Nutzer ausschließlich offizielle Stimmen wünschte.
@@ -77,9 +77,12 @@ Ein älterer öffentlich verfügbarer ONNX-Export wurde bei der Prüfung wegen
 abweichender Gewichte und Token-IDs verworfen. Mit einem erhaltenen MIT-Exporter
 wurde der aktuelle Checkpoint neu exportiert, gegen PyTorch geprüft und im
 passenden Präzisionsmix quantisiert. Nichtsemantische ONNX-Debug-Metadaten werden
-entfernt. Die 24-Layer-Variante hat dieselbe Grundstruktur mit72statt18Flow-Zuständen,
+entfernt. Die 24-Layer-Variante hat dieselbe Grundstruktur mit 72 statt 18 Flow-Zuständen,
 wurde hier jedoch weder exportiert noch auf einem Gerät verglichen. Angeboten wird
 bewusst der kleinere Sechs-Layer-Checkpoint mit sämtlichen offiziellen Stimmen.
+Der deutsche Erstexport verwendet feste KV-Puffer mit 1.000 Positionen; der englische
+Download besitzt bereits dynamische Cacheachsen. Dieser Export-Optimierungsschritt
+ist noch nicht übernommen. Gleiche Pixel-Leistung wird daher nicht behauptet.
 
 ## Tatsächlich ausgeführte Prüfungen
 
@@ -90,12 +93,20 @@ bewusst der kleinere Sechs-Layer-Checkpoint mit sämtlichen offiziellen Stimmen.
 - **25/25** normalisierte Beispiele: produktiver Kotlin-Tokenizer gegen offiziellen
   deutschen JSON-Tokenizer. Zusätzlich Konvertierungsprüfungen JSON → SentencePiece.
 - Produktiver Kotlin-Leser: **27/27** vollständige vorbereitete Stimmdateien geprüft;
-  passende18FlowLM- und56Mimi-Zustände.
+  passende 18 FlowLM- und 56 Mimi-Zustände.
 - Python/ORT-CPU auf dem Build-Rechner: **27/27** Stimmen mit endlichen,
   nichtstummen Audiodaten und plausibler Mindestdauer. Das ist kein Hörtest,
   keine Spracherkennungsbewertung und kein Android-/Pixel-Messergebnis.
-- Android-Build und vollständige JVM-Suiten beider Distributionen: aktueller
-  Status und Prüfzahlen werden nach dem abschließenden CI-Lauf ergänzt.
+- Abschließender [Android-CI-Lauf](https://github.com/madebycli/marmalade-tts-android-german/actions/runs/42694557306):
+  **1.933 F-Droid- und 1.933 Play-JVM-Tests**, insgesamt **3.866**, jeweils ohne
+  Fehler oder übersprungene Tests. ARM64-Debug-APK gebaut; Paketkennung,
+  espeak-Bibliothek, Signatur und fehlende deutsche Gewichte in der APK geprüft.
+- Veröffentlichte APK und das vollständige Modellpaket nochmals über ihre realen
+  GitHub-Download-URLs geladen; Größe und SHA-256 stimmen mit den Prüfdateien
+  und dem Modellkatalog überein. APK zusätzlich lokal mit apksigner geprüft.
+- Zwei GitHub-Modell-Builds haben das Paket aus öffentlichen Eingaben neu erzeugt;
+  der zweite hat dieselbe Prüfsumme bestätigt. Beide führten die Audio-Prüfung
+  aller 27 Stimmen aus. Keine Pixel-Messung.
 
 Rohdaten: [reports/pocket-german](reports/pocket-german). Es gibt kein angeschlossenes
 Testgerät und keinen ausgeführten Emulator-Test. Oberfläche, System-TTS, Stop,
@@ -110,6 +121,7 @@ Auf dem Telefon bitte testen:
 - Modell installiert lassen, Netzwerkzugriff ausschalten und dieselben Texte testen.
 - Original-App separat öffnen und vorlesen lassen. Dann TTS aus einer anderen App
   mit dem deutschen Testmotor prüfen.
+- Für Klangvergleiche zunächst Tempo 1,0 und keine Effekte verwenden.
 - Für Leistung unter den vorhandenen Entwickler-/Benchmark-Werkzeugen Englisch
   Pocket und Pocket TTS German getrennt auswählen; jeweils kurzen und langen Text
   in der passenden Sprache einsetzen. Kalten Modellstart und warme Wiederholung
@@ -118,7 +130,7 @@ Auf dem Telefon bitte testen:
 
 ## Android-Build wiederholen
 
-JDK17, Android SDK36, NDK26.3.11579264 und CMake3.22.1; einmal das espeak-Submodul laden:
+JDK 17, Android SDK 36, NDK 26.3.11579264 und CMake 3.22.1; einmal das espeak-Submodul laden:
 
 ```sh
 git submodule update --init third_party/espeak-ng
@@ -148,6 +160,6 @@ cd -
 
 Der Exporter erhält nur die mitgelieferte kleine `--config`-Korrektur; Zustandsschema
 und Inferenz folgen seiner bestehenden Fünf-Graph-Pipeline. Das Paket-Skript
-verifiziert alle Eingangsdaten, erzeugt die27PPS1-Dateien und ein deterministisches
+verifiziert alle Eingangsdaten, erzeugt die 27 PPS1-Dateien und ein deterministisches
 `pocket-tts-de.tar.gz` mit Wrapper-Verzeichnis, Metadaten und Lizenztexten.
 Checkpoint, Graphen, Stimmen, APK und Tokens werden nicht neu in Git eingecheckt.

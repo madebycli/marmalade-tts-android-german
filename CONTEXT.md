@@ -114,3 +114,5 @@ its entry here in the same change.
 - **Pocket German.** The six-layer German Pocket checkpoint, engine id `pocket-tts-de`; all27official German voice IDs, default Anna. Its separate, checksum-pinned download lives in this fork, never the APK.
 - **Prepared voice state.** An official voice-conditioned transformer KV cache, adapted offline to the existing five-graph state manifest. PPS1 gzip files live in `voice_states/`; only the active voice is retained by `StateFrame`. These are distinct from raw encoder `.emb` files. No English state is reused.
 - **German test app.** `app.marmalade.tts.de.debug` (arm64 build with `-PgermanArm64`), labelled Marmalade TTS German; installs beside original Marmalade. Android namespaces, notification channels and preferences are scoped by package/UID; exported actions do not change their documented protocol.
+
+- **Unrated test engine.** Speed tier and quality grade are absent until measured/listened to. The German test engine shows no rating meters; existing engines keep their original grades.

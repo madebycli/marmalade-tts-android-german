@@ -1,4 +1,4 @@
-> **German Pocket test fork:** native German Pocket TTS with all27official voices as a separate, checksum-verified engine download. The German data is not embedded in the APK. Installation, licences and honest test status: [GERMAN_POCKET.md](GERMAN_POCKET.md).
+> **German Pocket test fork:** native German Pocket TTS with all 27 official voices as a separate, checksum-verified engine download. The German data is not embedded in the APK. [Test APK](https://github.com/madebycli/marmalade-tts-android-german/releases/tag/pocket-de-test-11b342dc). Installation, licences and honest test status: [GERMAN_POCKET.md](GERMAN_POCKET.md).
 
 <p align="center">
   <img src="assets/mascot_happy.png" alt="Marmalade TTS" width="170">

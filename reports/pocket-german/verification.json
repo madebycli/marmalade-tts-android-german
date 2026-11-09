@@ -1,0 +1,42 @@
+{
+  "source_commit": "11b342dcb07f66aa883d4667a1ec8523b33b2416",
+  "android_ci": "https://github.com/madebycli/marmalade-tts-android-german/actions/runs/42694557306",
+  "model_ci_runs": [
+    42692721964,
+    42694220938
+  ],
+  "apk": {
+    "release": "pocket-de-test-11b342dc",
+    "bytes": 124836372,
+    "sha256": "87c491adf10673765d4d2ad390b6fdeee6d7e00b8a7b154803dd14f4b5536cd1",
+    "download_verified": true,
+    "signature_verified": true,
+    "package": "app.marmalade.tts.de.debug",
+    "abi": "arm64-v8a",
+    "german_model_data_embedded": false
+  },
+  "model": {
+    "release": "pocket-de-bundle-v1",
+    "bytes": 245862258,
+    "installed_bytes": 367588914,
+    "sha256": "47f36b2862f81fe8faf85722377e1898417206aa2faf2ffff37a9c4214e517ef",
+    "download_verified": true,
+    "voices": 27
+  },
+  "kotlin_tokenizer_parity_cases": 25,
+  "kotlin_prompt_reader_complete_files": 27,
+  "pure_kotlin_frontend_cases": 2,
+  "device_tests": false,
+  "pixel_performance_measured": false,
+  "listening_grade_assigned": false,
+  "previous_android_runs": [
+    {
+      "run": 42686078134,
+      "result": "failed compilation; stale VoicePrompt.embedding reference corrected"
+    },
+    {
+      "run": 42691374903,
+      "result": "compiled; 1932 F-Droid tests, 10 failures; catalog/setup snapshots, no-grade handling and missing German frontend profile corrected"
+    }
+  ]
+}
