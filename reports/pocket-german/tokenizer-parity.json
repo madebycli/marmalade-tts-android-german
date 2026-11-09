@@ -1,0 +1,391 @@
+[
+  {
+    "prepared": "Hallo Welt.",
+    "raw": "Hallo Welt.",
+    "ids": [
+      648,
+      355,
+      777,
+      612,
+      269
+    ]
+  },
+  {
+    "prepared": "Guten Morgen, heute scheint die Sonne.",
+    "raw": "Guten Morgen, heute scheint die Sonne.",
+    "ids": [
+      1130,
+      262,
+      260,
+      876,
+      261,
+      1029,
+      260,
+      538,
+      273,
+      266,
+      1160,
+      269
+    ]
+  },
+  {
+    "prepared": "Äpfel, Öl und süße Grüße!",
+    "raw": "Äpfel, Öl und süße Grüße!",
+    "ids": [
+      260,
+      199,
+      136,
+      2443,
+      261,
+      260,
+      199,
+      154,
+      355,
+      264,
+      2390,
+      1161,
+      401,
+      500,
+      263,
+      324
+    ]
+  },
+  {
+    "prepared": "vierzehnte März zweitausendsechsundzwanzig um sechzehn Uhr dreißig",
+    "raw": "14. März 2026 um 16:30 Uhr",
+    "ids": [
+      897,
+      1661,
+      287,
+      2691,
+      374,
+      1636,
+      992,
+      265,
+      263,
+      474,
+      265,
+      3383,
+      1754,
+      319,
+      260,
+      265,
+      263,
+      474,
+      1661,
+      1712,
+      260,
+      328,
+      3168
+    ]
+  },
+  {
+    "prepared": "fünfzig Prozent und Köln nach Düsseldorf",
+    "raw": "50 % & Köln → Düsseldorf",
+    "ids": [
+      260,
+      352,
+      3535,
+      951,
+      1301,
+      273,
+      264,
+      398,
+      2048,
+      270,
+      313,
+      713,
+      3028,
+      3251
+    ]
+  },
+  {
+    "prepared": "a b",
+    "raw": "a  b",
+    "ids": [
+      260,
+      516,
+      260,
+      331
+    ]
+  },
+  {
+    "prepared": "Text",
+    "raw": "  Text  ",
+    "ids": [
+      432,
+      263,
+      857,
+      273
+    ]
+  },
+  {
+    "prepared": "日本語",
+    "raw": "日本語",
+    "ids": [
+      260,
+      234,
+      155,
+      169,
+      234,
+      160,
+      176,
+      236,
+      174,
+      162
+    ]
+  },
+  {
+    "prepared": "Ⅳ",
+    "raw": "Ⅳ",
+    "ids": [
+      260,
+      230,
+      137,
+      167
+    ]
+  },
+  {
+    "prepared": "👋",
+    "raw": "👋",
+    "ids": [
+      260,
+      244,
+      163,
+      149,
+      143
+    ]
+  },
+  {
+    "prepared": "ÖPNV",
+    "raw": "ÖPNV",
+    "ids": [
+      260,
+      199,
+      154,
+      3993,
+      1657,
+      3998
+    ]
+  },
+  {
+    "prepared": "München, Köln",
+    "raw": "München–Köln",
+    "ids": [
+      3124,
+      363,
+      261,
+      398,
+      2048,
+      270
+    ]
+  },
+  {
+    "prepared": "Doktor Müller kommt zum Beispiel um sechzehn Uhr dreißig.",
+    "raw": "Dr. Müller kommt z. B. um 16:30 Uhr.",
+    "ids": [
+      260,
+      2338,
+      644,
+      1733,
+      1102,
+      1046,
+      405,
+      735,
+      838,
+      319,
+      260,
+      265,
+      263,
+      474,
+      1661,
+      1712,
+      260,
+      328,
+      3168,
+      269
+    ]
+  },
+  {
+    "prepared": "Die Temperatur beträgt minus vier Grad Celsius.",
+    "raw": "Die Temperatur beträgt −4°C.",
+    "ids": [
+      340,
+      432,
+      369,
+      414,
+      268,
+      2052,
+      285,
+      1688,
+      273,
+      260,
+      339,
+      366,
+      477,
+      897,
+      2989,
+      891,
+      383,
+      265,
+      1157,
+      269
+    ]
+  },
+  {
+    "prepared": "eintausendzweihundertvierunddreißig Euro und sechsundfünfzig Cent",
+    "raw": "1.234,56 €",
+    "ids": [
+      280,
+      273,
+      992,
+      374,
+      3410,
+      918,
+      1067,
+      268,
+      985,
+      328,
+      3168,
+      1881,
+      451,
+      264,
+      1957,
+      985,
+      352,
+      3535,
+      891,
+      262,
+      273
+    ]
+  },
+  {
+    "prepared": "am vierzehnten März",
+    "raw": "am 14. März",
+    "ids": [
+      438,
+      897,
+      1661,
+      316,
+      2691,
+      374
+    ]
+  },
+  {
+    "prepared": "Der Akku hat fünfundzwanzig Prozent.",
+    "raw": "Der Akku hat 25%.",
+    "ids": [
+      359,
+      437,
+      375,
+      1538,
+      368,
+      1391,
+      3383,
+      1754,
+      951,
+      1301,
+      273,
+      269
+    ]
+  },
+  {
+    "prepared": "Eins\nZwei",
+    "raw": "Eins\nZwei",
+    "ids": [
+      382,
+      265,
+      14,
+      3996,
+      425,
+      840
+    ]
+  },
+  {
+    "prepared": "Was für eine schöne Überraschung!",
+    "raw": "Was für eine schöne Überraschung!",
+    "ids": [
+      580,
+      344,
+      305,
+      513,
+      263,
+      260,
+      199,
+      160,
+      590,
+      478,
+      335,
+      296,
+      324
+    ]
+  },
+  {
+    "prepared": "Übergrößenträger",
+    "raw": "Übergrößenträger",
+    "ids": [
+      260,
+      199,
+      160,
+      1177,
+      304,
+      429,
+      500,
+      262,
+      1688,
+      268
+    ]
+  },
+  {
+    "prepared": "drei Komma eins vier Prozent",
+    "raw": "3,14 Prozent",
+    "ids": [
+      675,
+      1403,
+      516,
+      280,
+      265,
+      897,
+      951,
+      1301,
+      273
+    ]
+  },
+  {
+    "prepared": "Tür auf, Straße frei!",
+    "raw": "Tür auf, Straße frei!",
+    "ids": [
+      1110,
+      286,
+      261,
+      260,
+      2103,
+      691,
+      324
+    ]
+  },
+  {
+    "prepared": "Je t'aime.",
+    "raw": "Je t’aime.",
+    "ids": [
+      2006,
+      260,
+      273,
+      386,
+      516,
+      851,
+      263,
+      269
+    ]
+  },
+  {
+    "prepared": "",
+    "raw": "",
+    "ids": []
+  },
+  {
+    "prepared": "",
+    "raw": "   ",
+    "ids": []
+  }
+]

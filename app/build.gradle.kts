@@ -64,7 +64,7 @@ android {
         // 32-bit ARM). x86 / x86_64 are emulator-only; shipping their native
         // libs costs APK size with zero real-device benefit. Drop them.
         // Anyone running the app in an x86 emulator can do a from-source build.
-        ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+        ndk { abiFilters += if (project.hasProperty("germanArm64")) listOf("arm64-v8a") else listOf("arm64-v8a", "armeabi-v7a") }
 
         // CMake build: espeak-ng compiled from source (pinned submodule at
         // third_party/espeak-ng) into libespeak-ng.so, plus our JNI shims.

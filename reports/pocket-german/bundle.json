@@ -1,0 +1,9 @@
+{
+  "archive": "pocket-tts-de.tar.gz",
+  "sha256": "47f36b2862f81fe8faf85722377e1898417206aa2faf2ffff37a9c4214e517ef",
+  "sizeBytes": 245862258,
+  "installedSizeBytes": 367588914,
+  "voices": 27,
+  "flowLayers": 6,
+  "device_tested": false
+}

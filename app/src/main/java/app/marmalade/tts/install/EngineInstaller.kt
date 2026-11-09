@@ -1,5 +1,7 @@
 package app.marmalade.tts.install
 
+import app.marmalade.tts.engine.pocket.PocketPreparedVoice
+import app.marmalade.tts.data.PocketGermanVoiceCatalog
 import android.content.res.AssetManager
 import android.util.Log
 import app.marmalade.tts.data.KokoroGermanVoiceCatalog
@@ -1203,8 +1205,8 @@ open class EngineInstaller @Inject constructor(
      * (Outdated) carries fewer voices than the catalog offers (#45).
      */
     open suspend fun germanPocketVoiceKeys(): Set<String> = withContext(Dispatchers.IO) {
-        PocketVoiceFiles.presentKeys(engineDirFor(app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE),
-            app.marmalade.tts.data.PocketGermanVoiceCatalog.KEYS)
+        PocketVoiceFiles.presentKeys(engineDirFor(PocketGermanVoiceCatalog.ENGINE),
+            PocketGermanVoiceCatalog.KEYS)
     }
 
     open suspend fun pocketVoiceKeys(): Set<String> = withContext(Dispatchers.IO) {
@@ -1541,7 +1543,7 @@ open class EngineInstaller @Inject constructor(
         if (outdated != null) return outdated
 
         return when (descriptor.name) {
-            "pocket-tts-de" -> verifyPocketLayout(dir, app.marmalade.tts.data.PocketGermanVoiceCatalog.voices, preparedAllowed = true)
+            "pocket-tts-de" -> verifyPocketLayout(dir, PocketGermanVoiceCatalog.voices, preparedAllowed = true)
             "pocket-tts-en-v2026_04"   -> verifyPocketLayout(dir, PocketVoiceCatalog.voices)
             "pocket-tts-en-v2026_04-dev" -> verifyPocketLayout(dir, PocketDevVoiceCatalog.voices)
             "kitten-direct-v0_8"       -> verifyKittenDirectLayout(dir)
@@ -1758,7 +1760,7 @@ open class EngineInstaller @Inject constructor(
             val wav = File(voicesDir, "$name.wav")
             val prepared = File(dir, "voice_states/$name.prompt.gz")
             if (preparedAllowed && prepared.isFile) {
-                if (runCatching { app.marmalade.tts.engine.pocket.PocketPreparedVoice.validateHeader(prepared, bundleSpec.flowLmStateManifest) }.isFailure)
+                if (runCatching { PocketPreparedVoice.validateHeader(prepared, bundleSpec.flowLmStateManifest) }.isFailure)
                     return InstallState.Corrupt
             } else if (!wav.isFile || wav.length() == 0L) return InstallState.Corrupt
         }

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Reproduce the German mixed-precision bundle from pinned, licensed public exports.
-No tokens, PyTorch, model execution on Android, or unverified replacement URLs.
+No tokens, checkpoint weights embedded in the APK, or unverified replacement URLs.
+Run export_german.py first; this packager itself does not need PyTorch.
 Requires numpy and safetensors. The app reads PPS1 via PocketPreparedVoice.
 """
 import argparse
@@ -100,20 +101,24 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--cache', type=Path, required=True)
     ap.add_argument('--output', type=Path, required=True)
+    ap.add_argument('--export-dir', type=Path, required=True)
     args = ap.parse_args()
     lock = json.loads((HERE / 'german-sources.json').read_text())
     bundle = args.output / 'pocket-tts-de'
+    if bundle.exists() and any(bundle.iterdir()):
+        raise ValueError('Bundle output must be empty; choose a new output directory')
     bundle.mkdir(parents=True, exist_ok=True)
     for entry in lock:
         cached = args.cache / entry['path']
         checked_download(entry, cached)
-        if 'voice' not in entry:
-            shutil.copyfile(cached, bundle / entry['path'])
+    export_files = ['bundle.json', 'tokenizer.model', 'bos_before_voice.npy'] + list(GRAPHS.values())
+    for name in export_files:
+        shutil.copyfile(args.export_dir / name, bundle / name)
     spec = json.loads((bundle / 'bundle.json').read_text())
     voices = json.loads((HERE / 'german-voices.json').read_text())
     spec.update(bundle_name='pocket-tts-de', language='de', predefined_voices=[v['key'] for v in voices],
                 onnx_files=GRAPHS, quantization_variant='mixed-fp32-mimi',
-                voice_state_format='PPS1', default_voice='anna')
+                voice_state_format='PPS1', default_voice='anna', tokenizer_normalization='identity', supports_voice_cloning=False)
     (bundle / 'bundle.json').write_text(json.dumps(spec, indent=2, sort_keys=True) + '\n')
     prepared = bundle / 'voice_states'
     prepared.mkdir(exist_ok=True)
@@ -123,6 +128,9 @@ def main():
         rows, states = adapt_voice(source, manifest)
         write_prompt(prepared / (voice['key'] + '.prompt.gz'), rows, states, manifest)
         print(f"{voice['key']}: {rows} official prompt frames", flush=True)
+    graph_records = [{'path': name, 'sha256': hashlib.file_digest((bundle / name).open('rb'), 'sha256').hexdigest(),
+                      'size': (bundle / name).stat().st_size} for name in export_files]
+    (bundle / 'export-files.json').write_text(json.dumps(graph_records, indent=2) + '\n')
     (bundle / 'sources.json').write_text(json.dumps(lock, indent=2) + '\n')
     shutil.copyfile(HERE / 'german-voices.json', bundle / 'voices.json')
     licences = bundle / 'LICENSES'

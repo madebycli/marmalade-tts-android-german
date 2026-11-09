@@ -1,51 +1,15 @@
 [
   {
-    "path": "bundle.json",
-    "url": "https://huggingface.co/KevinAHM/pocket-tts-onnx/resolve/58a6d00cf13d239b6748cb0769f35c580a8f606c/onnx/german/bundle.json",
-    "size": 24362,
-    "sha256": "7f032e4df0db3a02e24871dfa496e2b7ffa095dd98640bfcf12c04b8671ac60e"
+    "path": "checkpoint/german.safetensors",
+    "url": "https://huggingface.co/kyutai/pocket-tts-without-voice-cloning/resolve/1e08e6a23401048648a9fdcfde2f89348215c2a7/languages/german/model.safetensors",
+    "size": 219029196,
+    "sha256": "9fe42605604832349e3f495177bde56b77ae8fee73b2ed4b63236092ccde7621"
   },
   {
-    "path": "tokenizer.model",
-    "url": "https://huggingface.co/KevinAHM/pocket-tts-onnx/resolve/58a6d00cf13d239b6748cb0769f35c580a8f606c/onnx/german/tokenizer.model",
-    "size": 59837,
-    "sha256": "389079b9c67cd17ff1c565d53bc695df390b4ca8abf2300947e659585edd9d2a"
-  },
-  {
-    "path": "bos_before_voice.npy",
-    "url": "https://huggingface.co/KevinAHM/pocket-tts-onnx/resolve/58a6d00cf13d239b6748cb0769f35c580a8f606c/onnx/german/bos_before_voice.npy",
-    "size": 4224,
-    "sha256": "8c866aec4bcd5f0e6ca788f4b24eacba799b02262905e9f5d6f967409872f8df"
-  },
-  {
-    "path": "flow_lm_main_int8.onnx",
-    "url": "https://huggingface.co/KevinAHM/pocket-tts-onnx/resolve/58a6d00cf13d239b6748cb0769f35c580a8f606c/onnx/german/flow_lm_main_int8.onnx",
-    "size": 76341079,
-    "sha256": "3d5e9cd303ecd26fc75b91e2766bce6de3d274d397d3ee9a392f6299366681ef"
-  },
-  {
-    "path": "flow_lm_flow.onnx",
-    "url": "https://huggingface.co/KevinAHM/pocket-tts-onnx/resolve/58a6d00cf13d239b6748cb0769f35c580a8f606c/onnx/german/flow_lm_flow.onnx",
-    "size": 39097095,
-    "sha256": "3b6dceddb6ea594f25d871d5466112b1c7a18bad0ef43b967a7a857b518143a1"
-  },
-  {
-    "path": "mimi_decoder.onnx",
-    "url": "https://huggingface.co/KevinAHM/pocket-tts-onnx/resolve/58a6d00cf13d239b6748cb0769f35c580a8f606c/onnx/german/mimi_decoder.onnx",
-    "size": 41471926,
-    "sha256": "e068e4b2a30e721a48171f15f09bdc082ad9f531434e9e2bcee2b2cd4e3e77f6"
-  },
-  {
-    "path": "mimi_encoder.onnx",
-    "url": "https://huggingface.co/KevinAHM/pocket-tts-onnx/resolve/58a6d00cf13d239b6748cb0769f35c580a8f606c/onnx/german/mimi_encoder.onnx",
-    "size": 39768446,
-    "sha256": "71a00b2c6270af5f99389609bcd3d4682bf692fccb8f0ff9b21c3d2e473a204b"
-  },
-  {
-    "path": "text_conditioner.onnx",
-    "url": "https://huggingface.co/KevinAHM/pocket-tts-onnx/resolve/58a6d00cf13d239b6748cb0769f35c580a8f606c/onnx/german/text_conditioner.onnx",
-    "size": 16388344,
-    "sha256": "a004c74047bc1c4208f6ca150c6337fb541ab03e154493f456d43baa0fd469f1"
+    "path": "checkpoint/tokenizer.json",
+    "url": "https://huggingface.co/kyutai/pocket-tts-without-voice-cloning/resolve/4e1e0a3e611c51c0b4ed8174fc10f32a54644303/languages/german/tokenizer.json",
+    "size": 245966,
+    "sha256": "2d77849811e3d1b6ae80e5b11b203f57e1847901104d8a0573b34f46f8dddb53"
   },
   {
     "path": "official_voices/alba.safetensors",

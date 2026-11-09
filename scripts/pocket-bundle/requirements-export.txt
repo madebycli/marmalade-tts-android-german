@@ -1,0 +1,19 @@
+# Install torch==2.5.1+cpu separately from https://download.pytorch.org/whl/cpu
+# Export tools only; Android dependencies are unchanged.
+numpy==2.2.6
+onnx==1.19.1
+onnxruntime==1.23.2
+onnxscript==0.5.6
+sentencepiece==0.2.1
+protobuf==7.36.2
+tokenizers==0.22.1
+safetensors==0.6.2
+pydantic==2.11.7
+beartype==0.20.2
+einops==0.8.1
+requests==2.32.5
+typer==0.16.1
+pyyaml==6.0.3
+scipy==1.16.3
+soundfile==0.13.1
+huggingface-hub==1.33.0

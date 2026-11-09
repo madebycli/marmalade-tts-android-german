@@ -1,5 +1,6 @@
 package app.marmalade.tts.engine
 
+import app.marmalade.tts.engine.pocket.PocketPreparedVoice
 import ai.onnxruntime.OnnxTensor
 import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtLoggingLevel
@@ -208,7 +209,7 @@ open class PocketEngine @Inject constructor(
     private fun voiceInput(name: String): VoiceInput {
         val prepared = File(engineDir, "voice_states/$name.prompt.gz")
         if (prepared.isFile) return VoiceInput(null, prepared,
-            app.marmalade.tts.engine.pocket.PocketPreparedVoice.rows(prepared))
+            PocketPreparedVoice.rows(prepared))
         val data = embeddingForVoice(name)
         val bos = if (bundle?.insertBosBeforeVoice == true) 1 else 0
         return VoiceInput(data, null, data.size / (bundle?.conditioningDim ?: 1024) + bos)
@@ -410,7 +411,7 @@ open class PocketEngine @Inject constructor(
         val decodeKnob = knob("pocket.decode")
 
         val files = bundle!!.onnxFiles
-        Log.i(TAG, "Loading Pocket bundle (quantization=${bundle!!.quantizationVariant}): " +
+        Log.i(TAG, "Loading Pocket bundle engine=$engineName (quantization=${bundle!!.quantizationVariant}): " +
             "text_cond=${files.textConditioner}, mimi_enc=${files.mimiEncoder}, " +
             "mimi_dec=${files.mimiDecoder}, flow_main=${files.flowLmMain}, " +
             "flow_flow=${files.flowLmFlow}")
@@ -1440,7 +1441,7 @@ open class PocketEngine @Inject constructor(
             // render holds the lock (without making the caller wait for one).
             warmupScope.launch {
                 synthLock.withLock {
-                    if (voicePrompt?.embedding === embedding) {
+                    if (voicePrompt?.identity === embedding) {
                         voicePrompt?.frame?.release()
                         voicePrompt = null
                     }
@@ -1588,11 +1589,12 @@ open class PocketEngine @Inject constructor(
         val manifest = cacheLen?.let { PocketCacheShapes.flowLm(bundle.flowLmStateManifest, it) } ?: bundle.flowLmStateManifest
         val cachedPrompt = voicePrompt
             ?.takeIf { it.identity == voiceInput.identity && it.cacheLen == cacheLen }?.frame
+        val carryStartedAt = System.currentTimeMillis()
         val carry = if (cachedPrompt != null) {
             PocketStateCarry(cachedPrompt.retain())
         } else if (voiceInput.prepared != null) {
             val states = initStates(manifest)
-            app.marmalade.tts.engine.pocket.PocketPreparedVoice.read(voiceInput.prepared, manifest) { spec, input, count ->
+            PocketPreparedVoice.read(voiceInput.prepared, manifest) { spec, input, count ->
                 states.getValue(spec.inputName).loadPreparedBytes(input, count)
             }
             val frame = PocketStateCarry.bindSlots(ort, manifest, states)
@@ -1606,7 +1608,7 @@ open class PocketEngine @Inject constructor(
         try {
             // PHASE 1: voice conditioning.
             // text_embeddings = bos_before_voice ++ voice_embedding, shape [1, V+1, conditioningDim]
-            val phase1Start = System.currentTimeMillis()
+            val phase1Start = if (voiceInput.prepared != null) carryStartedAt else System.currentTimeMillis()
             if (cachedPrompt == null && voiceInput.prepared == null) {
                 val voiceEmbedding = requireNotNull(voiceEmbedding)
                 val bos = bosBeforeVoice ?: error("bos_before_voice missing")
@@ -1641,7 +1643,7 @@ open class PocketEngine @Inject constructor(
                 PhaseSpan(
                     "flow-lm phase 1 (voice cond)",
                     System.currentTimeMillis() - phase1Start,
-                    detail = if (cachedPrompt != null) "cached" else null,
+                    detail = when { cachedPrompt != null -> "cached"; voiceInput.prepared != null -> "official prepared state"; else -> null },
                 ),
             )
 

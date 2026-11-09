@@ -1,22 +1,16 @@
 package app.marmalade.tts.service
 
+import app.marmalade.tts.engine.pocket.PocketVoiceFiles
+import app.marmalade.tts.engine.EngineRegistry
 import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import androidx.activity.ComponentActivity
-import app.marmalade.tts.data.CloudApiVoiceCatalog
-import app.marmalade.tts.data.KittenDirectVoiceCatalog
-import app.marmalade.tts.data.KokoroDirectVoiceCatalog
-import app.marmalade.tts.data.KokoroGermanVoiceCatalog
 import app.marmalade.tts.data.PocketVoiceCatalog
 import app.marmalade.tts.data.db.VoiceMeta
 import app.marmalade.tts.data.db.VoiceMetaDao
 import app.marmalade.tts.engine.PocketEngine
-import app.marmalade.tts.engine.kitten.KittenDirectEngine
-import app.marmalade.tts.engine.kokoro.KokoroDirectEngine
-import app.marmalade.tts.engine.kokoro.KokoroGermanEngine
-import app.marmalade.tts.engine.api.CloudApiEngine
 import app.marmalade.tts.engine.vits.VitsDirectEngine
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -50,13 +44,11 @@ class CheckVoiceDataActivity : ComponentActivity() {
 
     @Inject lateinit var voiceDao: VoiceMetaDao
 
-    @Inject lateinit var kittenDirect: KittenDirectEngine
-    @Inject lateinit var kokoroDirect: KokoroDirectEngine
-    @Inject lateinit var kokoroGerman: KokoroGermanEngine
-    @Inject lateinit var pocket: PocketEngine
-    @Inject lateinit var pocketGerman: app.marmalade.tts.engine.PocketGermanEngine
+    @Inject lateinit var engines: EngineRegistry
     @Inject lateinit var vits: VitsDirectEngine
-    @Inject lateinit var cloudApi: CloudApiEngine
+
+    private fun pocketKeys(name: String): Set<String> =
+        (engines.find(name) as? PocketEngine)?.installedVoiceKeys().orEmpty()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,10 +61,14 @@ class CheckVoiceDataActivity : ComponentActivity() {
         // Single snapshot of the Flow is sufficient — we're firing once
         // per CHECK_TTS_DATA dispatch, not subscribing.
         val voices = runBlocking { voiceDao.getAll().first() }
-        val (available, unavailable) =
-            classifyVoices(voices.filter { it.engine != app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE ||
-                app.marmalade.tts.engine.pocket.PocketVoiceFiles.isOffered(it.id, pocketGerman.installedVoiceKeys()) },
-                ::isEngineInstalled, pocket::installedVoiceKeys) { vits.installedPackIds() }
+        val pocketFilesByEngine = HashMap<String, Set<String>>()
+        val availableFiles = voices.filter { voice ->
+            val engine = engines.find(voice.engine)
+            engine !is PocketEngine || PocketVoiceFiles.isOffered(
+                voice.id, pocketFilesByEngine.getOrPut(voice.engine) { engine.installedVoiceKeys() })
+        }
+        val (available, unavailable) = classifyVoices(availableFiles, ::isEngineInstalled,
+            { pocketKeys(PocketVoiceCatalog.ENGINE) }) { vits.installedPackIds() }
 
         val data = Intent().apply {
             putStringArrayListExtra(
@@ -100,15 +96,9 @@ class CheckVoiceDataActivity : ComponentActivity() {
      * Developer-only rows (Pocket dev) and unknown engines are never
      * advertised.
      */
-    private fun isEngineInstalled(engineName: String): Boolean = when (engineName) {
-        KokoroDirectVoiceCatalog.ENGINE -> kokoroDirect.isInstalled()
-        KokoroGermanVoiceCatalog.ENGINE -> kokoroGerman.isInstalled()
-        KittenDirectVoiceCatalog.ENGINE -> kittenDirect.isInstalled()
-        PocketVoiceCatalog.ENGINE -> pocket.isInstalled()
-        app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE -> pocketGerman.isInstalled()
-        CloudApiVoiceCatalog.ENGINE -> cloudApi.isInstalled()
-        else -> false
-    }
+    private fun isEngineInstalled(engineName: String): Boolean =
+        EngineRegistry.isSystemTtsEngine(engineName) &&
+            engines.find(engineName)?.isInstalled() == true
 
     companion object {
         private const val TAG = "MarmaladeTts.CheckData"

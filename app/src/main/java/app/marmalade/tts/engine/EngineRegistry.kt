@@ -1,5 +1,6 @@
 package app.marmalade.tts.engine
 
+import app.marmalade.tts.data.PocketGermanVoiceCatalog
 import app.marmalade.tts.data.CloudApiVoiceCatalog
 import app.marmalade.tts.data.KittenDirectVoiceCatalog
 import app.marmalade.tts.data.KokoroDirectVoiceCatalog
@@ -84,7 +85,7 @@ class EngineRegistry internal constructor(engines: List<TtsEngine>) {
             KokoroGermanVoiceCatalog.ENGINE,
             KittenDirectVoiceCatalog.ENGINE,
             PocketVoiceCatalog.ENGINE,
-            app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE,
+            PocketGermanVoiceCatalog.ENGINE,
             PocketDevVoiceCatalog.ENGINE,
             VitsVoiceCatalog.ENGINE,
             CloudApiVoiceCatalog.ENGINE,

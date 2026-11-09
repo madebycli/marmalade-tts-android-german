@@ -1,5 +1,6 @@
 package app.marmalade.tts
 
+import app.marmalade.tts.data.PocketGermanVoiceCatalog
 import android.app.Application
 import android.util.Log
 import app.marmalade.tts.data.cloud.CloudProviderStore
@@ -181,7 +182,7 @@ class MarmaladeTtsApplication : Application() {
                 dao.upsertAll(KokoroGermanVoiceCatalog.voices)
                 dao.upsertAll(KittenDirectVoiceCatalog.voices)
                 dao.upsertAll(PocketVoiceCatalog.voices)
-                dao.upsertAll(app.marmalade.tts.data.PocketGermanVoiceCatalog.voices)
+                dao.upsertAll(PocketGermanVoiceCatalog.voices)
                 dao.upsertAll(PocketDevVoiceCatalog.voices)
                 dao.upsertAll(VitsVoiceCatalog.voices)
                 // Built-in effects. REPLACE-on-conflict refreshes them on each

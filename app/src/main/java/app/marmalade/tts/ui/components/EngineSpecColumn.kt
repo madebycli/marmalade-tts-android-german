@@ -80,22 +80,22 @@ fun EngineSpecColumn(
         verticalArrangement = Arrangement.Top,
     ) {
         if (engine.hasMeasuredRatings) {
-        SpecRow(label = stringResource(R.string.engine_spec_speed), labelSpoken = false) {
-            // Meter only — the tier word ("Fastest"/"Fast"/"Moderate"/"Heavy") is dropped
-            // from the card and carried as the meter's contentDescription, so
-            // the visual stays a bare gauge while TalkBack still names the tier
-            // for anyone who can't read fill length or colour.
-            SpeedMeter(
-                tier = engine.speedTier,
-                modifier = Modifier.padding(top = 2.dp),
-            )
-        }
-        SpecRow(label = stringResource(R.string.engine_spec_quality), labelSpoken = false) {
-            QualityMeter(
-                quality = engine.quality,
-                modifier = Modifier.padding(top = 2.dp),
-            )
-        }
+            SpecRow(label = stringResource(R.string.engine_spec_speed), labelSpoken = false) {
+                // Meter only — the tier word ("Fastest"/"Fast"/"Moderate"/"Heavy") is dropped
+                // from the card and carried as the meter's contentDescription, so
+                // the visual stays a bare gauge while TalkBack still names the tier
+                // for anyone who can't read fill length or colour.
+                SpeedMeter(
+                    tier = engine.speedTier,
+                    modifier = Modifier.padding(top = 2.dp),
+                )
+            }
+            SpecRow(label = stringResource(R.string.engine_spec_quality), labelSpoken = false) {
+                QualityMeter(
+                    quality = engine.quality,
+                    modifier = Modifier.padding(top = 2.dp),
+                )
+            }
         }
         SpecRow(label = stringResource(R.string.engine_spec_languages)) {
             EngineLanguagesValue(

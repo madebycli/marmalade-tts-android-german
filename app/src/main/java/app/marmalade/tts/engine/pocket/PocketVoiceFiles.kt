@@ -1,5 +1,6 @@
 package app.marmalade.tts.engine.pocket
 
+import app.marmalade.tts.data.PocketGermanVoiceCatalog
 import app.marmalade.tts.data.PocketVoiceCatalog
 import app.marmalade.tts.engine.PocketEngine
 import java.io.File
@@ -37,7 +38,7 @@ internal object PocketVoiceFiles {
         voiceId !in CATALOG_IDS || voiceId.substringAfter(':') in presentKeys
 
     private val CATALOG_IDS: Set<String> = (PocketVoiceCatalog.voices +
-        app.marmalade.tts.data.PocketGermanVoiceCatalog.voices).mapTo(HashSet()) { it.id }
+        PocketGermanVoiceCatalog.voices).mapTo(HashSet()) { it.id }
 
     private fun nonEmpty(f: File): Boolean = f.isFile && f.length() > 0L
 }

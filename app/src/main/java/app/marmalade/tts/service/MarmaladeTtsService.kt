@@ -1,5 +1,6 @@
 package app.marmalade.tts.service
 
+import app.marmalade.tts.data.PocketGermanVoiceCatalog
 import android.os.SystemClock
 import android.media.AudioFormat
 import android.speech.tts.SynthesisCallback
@@ -1113,9 +1114,9 @@ class MarmaladeTtsService : TextToSpeechService() {
         val all = voiceSnapshot.ifEmpty {
             runBlocking { voiceDao.getAll().first() }.also { voiceSnapshot = it }
         }
-        val germanKeys = (engines.find(app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE) as? PocketEngine)
+        val germanKeys = (engines.find(PocketGermanVoiceCatalog.ENGINE) as? PocketEngine)
             ?.installedVoiceKeys().orEmpty()
-        val withGermanFiles = all.filter { it.engine != app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE ||
+        val withGermanFiles = all.filter { it.engine != PocketGermanVoiceCatalog.ENGINE ||
             PocketVoiceFiles.isOffered(it.id, germanKeys) }
         return advertisableVoices(withGermanFiles, ::isEngineInstalled, ::installedPocketVoices) { vits.installedPackIds() }
     }

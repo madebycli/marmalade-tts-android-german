@@ -1,5 +1,7 @@
 package app.marmalade.tts.ui.screen
 
+import app.marmalade.tts.engine.PocketGermanEngine
+import app.marmalade.tts.data.PocketGermanVoiceCatalog
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -52,7 +54,7 @@ class BenchmarkViewModel @Inject constructor(
     private val kokoroGerman: KokoroGermanEngine,
     private val kittenDirect: KittenDirectEngine,
     private val pocket: PocketEngine,
-    private val pocketGerman: app.marmalade.tts.engine.PocketGermanEngine,
+    private val pocketGerman: PocketGermanEngine,
     private val vits: VitsDirectEngine,
     @ApplicationContext private val appContext: Context,
 ) : ViewModel() {
@@ -71,7 +73,7 @@ class BenchmarkViewModel @Inject constructor(
         KokoroGermanVoiceCatalog.ENGINE to (kokoroGerman to KokoroGermanVoiceCatalog.DEFAULT_VOICE_ID),
         KittenDirectVoiceCatalog.ENGINE to (kittenDirect to KittenDirectVoiceCatalog.DEFAULT_VOICE_ID),
         PocketVoiceCatalog.ENGINE to (pocket to PocketVoiceCatalog.DEFAULT_VOICE_ID),
-        app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE to (pocketGerman to app.marmalade.tts.data.PocketGermanVoiceCatalog.DEFAULT_VOICE_ID),
+        PocketGermanVoiceCatalog.ENGINE to (pocketGerman to PocketGermanVoiceCatalog.DEFAULT_VOICE_ID),
         VitsVoiceCatalog.ENGINE to (vits to VitsVoiceCatalog.DEFAULT_VOICE_ID),
     )
 

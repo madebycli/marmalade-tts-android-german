@@ -1,0 +1,197 @@
+{
+  "host_only": true,
+  "runtime": "onnxruntime 1.23.2 CPU, reference Python",
+  "load_ms": 1158.8,
+  "max_rss_kib": 803284,
+  "results": [
+    {
+      "voice": "anna",
+      "audio_seconds": 2.72,
+      "rms": 0.1219,
+      "first_chunk_ms": 505.2,
+      "rtf": 0.835
+    },
+    {
+      "voice": "alba",
+      "audio_seconds": 2.64,
+      "rms": 0.1065,
+      "first_chunk_ms": 332.7,
+      "rtf": 0.702
+    },
+    {
+      "voice": "azelma",
+      "audio_seconds": 2.56,
+      "rms": 0.1129,
+      "first_chunk_ms": 175.3,
+      "rtf": 0.686
+    },
+    {
+      "voice": "bill_boerst",
+      "audio_seconds": 2.88,
+      "rms": 0.045,
+      "first_chunk_ms": 168.8,
+      "rtf": 0.645
+    },
+    {
+      "voice": "caro_davy",
+      "audio_seconds": 2.96,
+      "rms": 0.0586,
+      "first_chunk_ms": 184.2,
+      "rtf": 0.624
+    },
+    {
+      "voice": "charles",
+      "audio_seconds": 2.96,
+      "rms": 0.0864,
+      "first_chunk_ms": 163.5,
+      "rtf": 0.645
+    },
+    {
+      "voice": "cosette",
+      "audio_seconds": 2.64,
+      "rms": 0.0227,
+      "first_chunk_ms": 169.2,
+      "rtf": 0.639
+    },
+    {
+      "voice": "daan",
+      "audio_seconds": 2.88,
+      "rms": 0.0574,
+      "first_chunk_ms": 191.6,
+      "rtf": 0.611
+    },
+    {
+      "voice": "eponine",
+      "audio_seconds": 2.88,
+      "rms": 0.0785,
+      "first_chunk_ms": 166.1,
+      "rtf": 0.635
+    },
+    {
+      "voice": "estelle",
+      "audio_seconds": 2.4,
+      "rms": 0.0918,
+      "first_chunk_ms": 176.5,
+      "rtf": 0.634
+    },
+    {
+      "voice": "eve",
+      "audio_seconds": 2.56,
+      "rms": 0.0796,
+      "first_chunk_ms": 179.8,
+      "rtf": 0.633
+    },
+    {
+      "voice": "fantine",
+      "audio_seconds": 2.32,
+      "rms": 0.1157,
+      "first_chunk_ms": 166.6,
+      "rtf": 0.648
+    },
+    {
+      "voice": "george",
+      "audio_seconds": 2.4,
+      "rms": 0.0872,
+      "first_chunk_ms": 185.2,
+      "rtf": 0.576
+    },
+    {
+      "voice": "giovanni",
+      "audio_seconds": 2.64,
+      "rms": 0.0423,
+      "first_chunk_ms": 145.6,
+      "rtf": 0.588
+    },
+    {
+      "voice": "jane",
+      "audio_seconds": 2.72,
+      "rms": 0.0853,
+      "first_chunk_ms": 177.3,
+      "rtf": 0.622
+    },
+    {
+      "voice": "javert",
+      "audio_seconds": 3.44,
+      "rms": 0.047,
+      "first_chunk_ms": 152.4,
+      "rtf": 0.583
+    },
+    {
+      "voice": "jean",
+      "audio_seconds": 2.64,
+      "rms": 0.1055,
+      "first_chunk_ms": 139.4,
+      "rtf": 0.556
+    },
+    {
+      "voice": "juergen",
+      "audio_seconds": 2.08,
+      "rms": 0.054,
+      "first_chunk_ms": 144.3,
+      "rtf": 0.537
+    },
+    {
+      "voice": "lola",
+      "audio_seconds": 2.96,
+      "rms": 0.0704,
+      "first_chunk_ms": 128.0,
+      "rtf": 0.512
+    },
+    {
+      "voice": "marius",
+      "audio_seconds": 2.48,
+      "rms": 0.0243,
+      "first_chunk_ms": 138.5,
+      "rtf": 0.625
+    },
+    {
+      "voice": "mary",
+      "audio_seconds": 2.48,
+      "rms": 0.1178,
+      "first_chunk_ms": 170.3,
+      "rtf": 0.629
+    },
+    {
+      "voice": "michael",
+      "audio_seconds": 2.64,
+      "rms": 0.0861,
+      "first_chunk_ms": 173.2,
+      "rtf": 0.928
+    },
+    {
+      "voice": "paul",
+      "audio_seconds": 2.64,
+      "rms": 0.1176,
+      "first_chunk_ms": 261.8,
+      "rtf": 0.919
+    },
+    {
+      "voice": "peter_yearsley",
+      "audio_seconds": 2.56,
+      "rms": 0.0314,
+      "first_chunk_ms": 187.1,
+      "rtf": 0.564
+    },
+    {
+      "voice": "rafael",
+      "audio_seconds": 2.4,
+      "rms": 0.0444,
+      "first_chunk_ms": 251.2,
+      "rtf": 0.997
+    },
+    {
+      "voice": "stuart_bell",
+      "audio_seconds": 2.72,
+      "rms": 0.0161,
+      "first_chunk_ms": 143.4,
+      "rtf": 0.663
+    },
+    {
+      "voice": "vera",
+      "audio_seconds": 2.96,
+      "rms": 0.1112,
+      "first_chunk_ms": 178.9,
+      "rtf": 0.606
+    }
+  ]
+}

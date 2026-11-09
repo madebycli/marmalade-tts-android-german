@@ -10,17 +10,28 @@ espeak-ng, even though Pocket itself consumes text directly without espeak.
 Pocket TTS by Kyutai: https://huggingface.co/kyutai/pocket-tts
 and https://github.com/kyutai-labs/pocket-tts (code MIT, weights CC-BY-4.0).
 German six-layer checkpoint, 24 kHz mono, 1024 conditioning dimensions.
-Public ONNX conversion by KevinAHM:
-https://huggingface.co/KevinAHM/pocket-tts-onnx/tree/58a6d00cf13d239b6748cb0769f35c580a8f606c/onnx/german
-(CC-BY-4.0 model card). The five graph files and German SentencePiece model are
-unchanged. flow_lm_main is INT8; flow_lm_flow, Mimi encoder/decoder and text
-conditioner remain FP32. No English encoder weights or English voice cache
-are substituted. The English download URLs and hashes remain unchanged.
-
-The matching exporter is available as a preserved MIT copy:
+Exported locally with the preserved MIT KevinAHM exporter copy:
 https://github.com/lomotron/pocket-tts-onnx-export/tree/8f52199533098963fe1cbd90bed35bb20d871b5e
-No exporter code is copied into the Android app. This bundle repackages existing
-exports; it is not a newly performed or independently verified PyTorch export.
+The current checkpoint is Kyutai's official public non-cloning model:
+`pocket-tts-without-voice-cloning`, revision
+1e08e6a23401048648a9fdcfde2f89348215c2a7. The matching JSON tokenizer is pinned
+at 4e1e0a3e611c51c0b4ed8174fc10f32a54644303. Both are CC-BY-4.0.
+The JSON Unigram vocabulary was converted losslessly to SentencePiece for the
+existing lightweight Kotlin tokenizer; token IDs and identity normalization are
+preserved. flow_lm_main is dynamically INT8-quantized (MatMul/QInt8); flow_lm_flow,
+Mimi encoder/decoder and text conditioner stay FP32, like the English mixed bundle.
+Non-semantic ONNX trace metadata is stripped for reproducibility and to avoid embedding local export paths. Operators and trained tensors are unchanged.
+The non-cloning checkpoint's encoder stays unmodified; this German engine exposes
+only the 27 official voices and explicitly rejects the dormant cloning API.
+No gated original weights, gated reference audio or unrelated English encoder is used.
+The English bundle URLs and hashes remain unchanged.
+
+An older public German ONNX conversion (KevinAHM revision58a6d00c) was rejected:
+its weights/tokenizer are from a different model generation than today's official
+voice states. They are not used in this fork's final bundle. The exporter itself
+remains usable with the current checkpoint after a small --config selection fix.
+Reproduction scripts and input checksums are in scripts/pocket-bundle/.
+No exporter/PyTorch code executes in or ships with the Android app.
 
 ## All 27 official German voice states
 

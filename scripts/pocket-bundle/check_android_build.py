@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 
 root = Path(__file__).resolve().parents[2]
 results = {}
-required = {'PocketGermanVoiceCatalogTest', 'PocketGermanTextTest', 'PocketPreparedVoiceTest'}
+required = {'PocketGermanVoiceCatalogTest', 'PocketGermanTextTest', 'PocketPreparedVoiceTest', 'PocketGermanEngineTest', 'EngineRegistryTest'}
 for variant in ['testFdroidDebugUnitTest', 'testPlayDebugUnitTest']:
     reports = list((root / 'app/build/test-results' / variant).glob('TEST-*.xml'))
     assert reports, f'Missing test reports: {variant}'

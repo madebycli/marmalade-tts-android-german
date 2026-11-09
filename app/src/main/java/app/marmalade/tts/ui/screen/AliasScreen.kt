@@ -1,5 +1,6 @@
 package app.marmalade.tts.ui.screen
 
+import app.marmalade.tts.data.PocketGermanVoiceCatalog
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -891,20 +892,20 @@ private fun AliasEditorSheet(
                         // A null column is English on Kitten, not
                         // auto-detect: detection is opt-in there.
                         kitten -> state.phonemizationLanguage ?: "en-us"
-                        state.engine == app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE -> "de"
+                        state.engine == PocketGermanVoiceCatalog.ENGINE -> "de"
                         else -> "en-us"
                     },
                     onPick = onPhonemizationLanguageChange,
                     enabled = kokoro || kitten,
                     entries = when {
-                        state.engine == app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE -> listOf("de" to R.string.pocket_de_language_name)
+                        state.engine == PocketGermanVoiceCatalog.ENGINE -> listOf("de" to R.string.pocket_de_language_name)
                         kokoro -> PHONEMIZATION_LANGUAGES
                         else -> KITTEN_PHONEMIZATION_LANGUAGES
                     },
                     note = when {
                         kokoro -> null
                         kitten -> R.string.alias_lang_engine_accented
-                        state.engine == app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE -> R.string.pocket_de_fixed_language
+                        state.engine == PocketGermanVoiceCatalog.ENGINE -> R.string.pocket_de_fixed_language
                         else -> R.string.alias_lang_engine_english_only
                     },
                 )
@@ -1338,7 +1339,7 @@ private val PHONEMIZATION_ENGINES: Set<String> = setOf(
     KittenDirectVoiceCatalog.ENGINE,
     PocketVoiceCatalog.ENGINE,
     PocketDevVoiceCatalog.ENGINE,
-    app.marmalade.tts.data.PocketGermanVoiceCatalog.ENGINE,
+    PocketGermanVoiceCatalog.ENGINE,
 )
 
 /**
